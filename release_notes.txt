@@ -1,0 +1,113 @@
+BUILD 2.3.8 update
+-updated some saving code to improve the speed.
+-still working on the loading code.
+-changed world size back to 100x100 tempoarily..
+-play in full screen by changing it within the settings!
+-game auto loads in full screen
+-banned swear words from world name
+
+BUILD 2.3.4 update
+-fixed messed up Chest layout
+-fixed anoying bug where when closing out of inventory with blocks in the 2x2 crafting bench, it would send the to the inventory but seperated instead of combined together.
+-fixed saving from 22.6 Mb to now just 980 Kb. also saving will be encrypted in ascii to avoid any cheating by changing values.
+-loading will temporarily not work due to new saving.
+
+BUILD 2.3.3 update
+-fixed bug where you could enter "delete world" menu and delete wolrds while playing on a world.
+-Main menu has been changed a little bit
+-added main menu Splash like in minecraft!
+-Crafting bench now shows up when opening!
+-Crafting bench allows you to craft chests!
+-Chests at the moment will all contain the same blocks (one will have 20 dirt, a dif. chest will have that same 20 dirt)
+-Texture pack re-aranged to look less cluttered and random images removed
+-Some rendering code improved to speed game up
+
+BUILD 2.3.2 update
+-some code simplified to be more efficient
+-significantly improved world generating speed, and world loading speed.
+-fixed glitch that crashed game when pressing load world (or delete world) when you have no created worlds
+-Finally fixed the download for the recources!
+
+BUILD 2.3.1 update
+-Delete World now works! 
+-fixed bug where when editing settings from in game, and then you save, you'd be sent to main menu
+-Creating a new world, or load a world will lead to a "generating terrain" screen so you know the game hasn't crashed yet
+-incredibly largened world size.
+
+BUILD 2.3.0 update
+-graphical adjustments
+-Settings menu allows you to toggle autosave, which if enabled, will save every minute.
+-Settings menu allows you to browse through the current list of worlds you have created, and delete them.
+-Game now has music from the original Minecraft (so i wont get money, who cares) and settings menu allows you to toggle this music
+-due to the new music, loading the game for the first time on a new computer takes forever (because its gotta download the songs) so I will be working on a loading screen while the game downloads the required recourses
+-changed up the backgrounds for the Menu's (Main menu, New World menu, Load World menu, Settings menu, Delete a World menu)
+
+BUILD 2.2.9 update
+-Loading a world will now load ALL game blocks, instead of only a few main ones (such as not loading craftable items)
+-fixed bug where screen followed player from the top of the world when loading
+-Nothing huge, but when loading a level, the player position will be remembered and therefore, loaded :P
+-saving game will take, and update a preview of the current world, and this preview will be available in the load menu!
+-a few new resources added
+-when you scroll through the list of worlds to load in the Load World Menu, the preview images are faded, but when you select a world, that preview is fully brightened.
+-code changed to be more efficient withing the movement and the inventory
+-Saving now save the time of the in-game time it is. so when loading, it will load you to the EXACT time you last started on
+-Settings Menu has been added with loads of upcoming features in 2.3.0!
+
+BUILD 2.2.8 update
+-saving from a loaded world use to not save to the original world, but to a file called ".WORLD" (so basicly didn't work). This has been fixed though.
+-Load world menu when opened for a second time would constantly add more and more selectable levels for no apperant reason. This has been fixed.
+-Load world now WORKS!!! the world will load exactly how it was last left! :D with every block in your inventory and everything!
+-Changed some of the saving code, will save faster and more efficiently. Same as loading (due to the changed saving)
+-fixed bug where if you create a new world and save from the pause menu, it wouldn't let you save (2.2.8 glitch only)
+
+BUILD 2.2.6 update
+-Load World menu now allows you to scroll (up and down keys) and select a world, then load them
+-Load World will also show the last time the world was played on.
+-New World now has a limit on how long a world can be called.
+-just for fun, the window will now include the name of the world you are playing on!
+-New World Text Field now has a flashing cursor (dont worry its slow) to help show you where its going to type at.
+
+BUILD 2.2.5 update
+-Load World menu now displays all worlds that have been created. You will soon (update 2.2.6) be able to scroll through the worlds and select one of them, then loading the world.
+
+BUILD 2.2
+-Create New World button will bring you to a menu where you can name a new world, then create it and play it. (this is to allow the loading level to load more than just the last game played)
+-Load world button will now bring you to a menu where you will (soon) be able to select a world you wish to play on.
++ / commands will no longer have ? symbols poping up while pressing a non-alphabeticle or non-digit button (such as ~ or ")
+
+BUILD 2.1
+-when starting up game for first time on a computer, it will put the nessasary recourses for the game to run in: "C:\Users\ YOUR USERS NAME HERE\AppData\Roaming\.MINECRAFT2D\
++game will now just come as a .jar (or .exe depending on what you downloaded), and will no longer be stored in a .zip file with folders
+-more code efficiently fixed to speed up gameplay
+ATTENTION:
+-known glitch --> Game crashes when you try to load a world
+
+BUILD 2.0
+-main menu now has a stone background to make it more interesting
+-exiting out of the inventory while holding a block will now put it back where you picked it up from
+-menu now lets you resume a recently paused game.
+-quitting to main menu save current world to a file
+-menu load button will load last played file (soon have a menu to select worlds)
++much more efficient code to help keep the fps rate steady
+
+BUILD 1.9
+-adjusted some text positions to make it look cleaner and more profesional
+-right clicking (to place one at a time) in the inventory crafting bench, will now work
+-crafting items that will add up to over 64 (ex, crafting planks with 17+ blocks of wood), will now seperate into 64 holding and the remainder still in the results cell.
+-Main menu added
+-"save and quit" button returns you to main menu while in game
+-Main menu allows you to load a world originaly played on, start a new world, change settings, and of course quit
+BUILD 1.7
+-starting build
+
+BUILD 1.8
+-right clicking an inventory slot with nothing in your hand will devide the stack clicked evenly in half.
+-player can now jump ~ 2 blocks high
+- / commands will now open a command line when you can write and delete a command of your liking
++graphical adjustments
+-health is now shown in the top left corner
+-the current MINECRAFT build version is now shown in the top right corner
++screen size adjusted to fit computer sceen a little better
+
+BUILD bellow
+-initial build
