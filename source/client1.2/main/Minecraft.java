@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 
 import com.minecraft.client.IO.CrashDumping;
@@ -30,7 +29,9 @@ import com.minecraft.client.menus.NewWorldMenu;
 import com.minecraft.client.menus.PauseMenu;
 import com.minecraft.client.menus.SettingsMenu;
 import com.minecraft.client.misc.References;
+import com.minecraft.client.misc.Splashes;
 import com.minecraft.client.resources.NewComputer;
+import com.minecraft.client.resources.SoundEngine;
 import com.minecraft.client.resources.Tile;
 
 public class Minecraft extends Applet implements Runnable {
@@ -42,6 +43,7 @@ public class Minecraft extends Applet implements Runnable {
 	
 	public Image					screen;
 	
+	public static Splashes			splashes;
 	public static SoundEngine 		soundengine;
 	public static Player			player;
 	public static FPS				FPS;
@@ -59,11 +61,12 @@ public class Minecraft extends Applet implements Runnable {
 	public static Sky 				sky;
 
 	public Minecraft() {
-		soundengine = new SoundEngine();
 		r = new References();
 		op = new OptionPane();
 		ip = new InputPane();
 		sky = new Sky();
+		soundengine = new SoundEngine();
+		splashes = new Splashes();
 		frame.dispose();
 		frame.setUndecorated(true);
 		frame.pack();
@@ -88,9 +91,10 @@ public class Minecraft extends Applet implements Runnable {
 		r.MENU = 0;
 		new Thread(this).start();
 		requestFocus();
-		
+		//start sound
 		//set frame to visible
 		frame.setVisible(true);
+		soundengine.playSound("menu1.wav");
 		System.out.println("Finished Settings Things Up");
 	}
 	
@@ -103,6 +107,7 @@ public class Minecraft extends Applet implements Runnable {
 		switch (r.MENU) {
 			case 0:
 				main.tick(); 		//Main Menu
+				splashes.tick();    //tick for splashing
 				break;
 			case 1:
 				newWorld.tick(); 	//New World Menu
@@ -138,6 +143,7 @@ public class Minecraft extends Applet implements Runnable {
 		switch (r.MENU) {
 			case 0:
 				main.render(g); 		//Main Menu
+				splashes.render(g);		//render splashes
 				break;
 			case 1:
 				newWorld.render(g); 	//New World Menu

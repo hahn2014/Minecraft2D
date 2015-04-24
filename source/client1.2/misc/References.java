@@ -27,9 +27,10 @@ public class References {
 	
 	
 	public final String 			BUILD = "Pre-Alpha BUILD";
-	public final String				VERSION = "0.1.2.01";
+	public final String				VERSION = "0.1.2.1";
 	public final String				NAME = "Minecraft 2D";
 	public String					curWorld = "";
+	public String					splash = "";
 	
 
 	public final double 			pixelSize = 3;
@@ -56,7 +57,7 @@ public class References {
 	public boolean					playSoundEF = true;
 	public boolean					autoSave = true;
 	public boolean					wasPlaying = false;
-	public boolean 					fullscreen = true;
+	public boolean 					fullscreen = false;
 	public boolean 					isGenerating = false;
 	public boolean					isMouseLeft = false;
 	public boolean					isMouseRight = false;

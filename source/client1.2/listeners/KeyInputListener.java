@@ -19,6 +19,7 @@ import com.minecraft.client.menus.NewWorldMenu;
 import com.minecraft.client.menus.PauseMenu;
 import com.minecraft.client.menus.SettingsMenu;
 import com.minecraft.client.misc.References;
+import com.minecraft.client.misc.Splashes;
 import com.minecraft.client.resources.Tile;
 
 public class KeyInputListener implements KeyListener{
@@ -440,6 +441,19 @@ public class KeyInputListener implements KeyListener{
 				} else if (r.MENU == 5) {
 					r.MENU = 6;
 				}
+				break;
+			case KeyEvent.VK_R:
+				if (r.MENU == 0) {
+					Splashes.getRandSplash();
+				}
+				break;
+			case KeyEvent.VK_F10:
+				Minecraft.setFrameSize(!r.fullscreen);
+				r.fullscreen = !r.fullscreen;
+				break;
+			case KeyEvent.VK_O:
+				//skip song
+				Minecraft.soundengine.playNext();
 				break;
 		}
 	}

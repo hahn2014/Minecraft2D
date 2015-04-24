@@ -1,7 +1,10 @@
 BUILD 1.2
 -Load and delete world's scroll bar is now properlly working
 -Loading a world (pressing enter while selecting one) will do nothing
--Working on fixing game so world actually works
+-Sound engine fully operational
+-removed sound files from jar to make file smaller
+-added a file downloader to download sound files when first loading the game
+-more to come
 
 BUILD 1.1
 -initial build
