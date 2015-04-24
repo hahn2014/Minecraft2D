@@ -166,6 +166,7 @@ public class KeyInputListener implements KeyListener{
 					case 4: //load menu
 						if (LoadWorldMenu.curselect != -1 && LoadWorldMenu.curselect != -2) {
 							LoadWorldMenu.curselect = -1;
+							LoadWorldMenu.scrollbar = 0;
 						} else if (LoadWorldMenu.curselect == -1) {
 							LoadWorldMenu.curselect = -2;
 						} else if (LoadWorldMenu.curselect == -2) {
@@ -174,6 +175,7 @@ public class KeyInputListener implements KeyListener{
 						break;
 					case 3: //delete menu
 						DeleteWorldMenu.curselect = -1;
+						DeleteWorldMenu.scrollbar = 0;
 						break;
 				}
 				break;
@@ -182,6 +184,7 @@ public class KeyInputListener implements KeyListener{
 					case 4: //load menu
 						if (LoadWorldMenu.curselect != -1 && LoadWorldMenu.curselect != -2) {
 							LoadWorldMenu.curselect = -1;
+							LoadWorldMenu.scrollbar = 0;
 						} else if (LoadWorldMenu.curselect == -1) {
 							LoadWorldMenu.curselect = -2;
 						} else if (LoadWorldMenu.curselect == -2) {
@@ -190,6 +193,7 @@ public class KeyInputListener implements KeyListener{
 						break;
 					case 3: //delete menu
 						DeleteWorldMenu.curselect = -1;
+						DeleteWorldMenu.scrollbar = 0;
 						break;
 				}
 				break;

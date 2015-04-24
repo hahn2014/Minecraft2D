@@ -27,7 +27,7 @@ public class References {
 	
 	
 	public final String 			BUILD = "Pre-Alpha BUILD";
-	public final String				VERSION = "0.1.32";
+	public final String				VERSION = "0.1.2.01";
 	public final String				NAME = "Minecraft 2D";
 	public String					curWorld = "";
 	
@@ -68,6 +68,7 @@ public class References {
 	
 	public final Font				font1 = new Font(Font.DIALOG, Font.PLAIN, 12);
 	public final Font				font2 = new Font(Font.DIALOG, Font.PLAIN, 9);
+	public final Font 				font3 = new Font(Font.SERIF, Font.PLAIN, 12);
 	
 	
 	public final Color				color1 = new Color(255, 255, 255);

@@ -62,7 +62,7 @@ public class MainMenu {
 	}
 	
 	public void render(Graphics g) {
-		g.setFont(r.font1);
+		g.setFont(r.font3);
 		g.setColor(r.emptyBG);
 		try {
 			for (int x = 0; x < widthtimes; x++) {
@@ -74,9 +74,15 @@ public class MainMenu {
 			CrashDumping.DumpCrash(e);
 			g.fillRect(0, 0, r.PIXEL.width, r.PIXEL.height);
 		}
-		
+		g.setColor(Color.WHITE);
 		//title
 		g.drawImage(Tile.logo, (r.PIXEL.width / 2) - (Tile.logo.getWidth() / 2), 5, 279, 50, null);
+		//version
+		g.drawString(r.BUILD + " " + r.VERSION, 6, r.PIXEL.height - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
+		//copyright
+		g.drawString("Copyright Bryce Hahn. Do not distribute!", (r.PIXEL.width - 6) - (m.getStringWidth("Copyright Bryce Hahn. Do not distribute!", r.font3)),
+				r.PIXEL.height - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
+		g.setFont(r.font1);
 		//buttons
 		for (int i = 0; i < 5; i++) {
 			//draw the lrgButton images

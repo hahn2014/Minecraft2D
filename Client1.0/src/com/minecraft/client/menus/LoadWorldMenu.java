@@ -19,8 +19,9 @@ import com.minecraft.client.resources.Tile;
 public class LoadWorldMenu {
 	
 	private int x = 0, y = 60, ySpace = 60, widthtimes = 0, heighttimes = 0;
+	private static int scrollbarstart = 50, scrollbarheight = 64, multiplier;
 	
-	public static int curselect = -1;
+	public static int curselect = -1, scrollbar = scrollbarstart;
 	
 	public static String lastWorld = "";
 	
@@ -40,7 +41,7 @@ public class LoadWorldMenu {
 
 	public LoadWorldMenu() {
 		r 	= Minecraft.r;
-		m 		= new Methods();
+		m 	= new Methods();
 		
 		x = (r.PIXEL.width / 2) - (r.lrgButtonWidth / 2);
 		
@@ -78,6 +79,12 @@ public class LoadWorldMenu {
 			} else if (i == worlds.size() - 1) {
 				worldSelected[i] = 3;
 			}
+		}
+		multiplier = scrollbarheight / r.worldsCount;
+		if (curselect != -1) {
+			scrollbar = multiplier * curselect;
+		} else {
+			scrollbar = 0;
 		}
 	}
 	
@@ -123,6 +130,7 @@ public class LoadWorldMenu {
 				img[i] = ImageIO.read(new File(Minecraft.nc.savesDirectory + "\\" + tmp + ".png"));
 			} catch(Exception e) {
 				img[i] = Tile.empty;
+				System.out.println("Could not find an image for " + tmp);
 			}
 		}
 		r.loaded = true;
@@ -242,9 +250,9 @@ public class LoadWorldMenu {
 				}
 			}
 		}
-		//draw the scroll bar (fake atm)
+		//draw the scroll bar
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 		g2d.setColor(new Color(0, 0, 0));
-		g2d.fillRect(342, 50, 8, 110);
+		g2d.fillRect(342, scrollbarstart + scrollbar, 8, 110);
 	}
 }
