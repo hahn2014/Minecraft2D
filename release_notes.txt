@@ -1,6 +1,15 @@
 BUILD 1.2.1
 -Chaned sound enine to use standard java library
 -removed lwjgl library to shirnk the file size even more
+-fixed bug where you could type 21 letters in new world textbox instead of just 20
+-fixed cursor on textfield not properly alligning with text
+-added method for sound effect playing, for furture use.. not currently in use
+-reworked sound playin method, works much better now
+-increased volume on sound, was too quite before
+-added a Logger method, stolen shamelessly from my friend Mason.
+-replaced all println lines with logger events
+-added crashdumping to new try catch loops
+-added possibility to run with debug mode in console (-d extension after name)
 
 BUILD 1.2
 -Load and delete world's scroll bar is now properlly working
