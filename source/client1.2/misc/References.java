@@ -53,7 +53,7 @@ public class References {
 	public boolean 					isJumping = false;
 	public boolean					isTyping = false;
 	public boolean					hasStarted = false;
-	public boolean					playMusic = true;
+	public boolean					playMusic = false;
 	public boolean					playSoundEF = true;
 	public boolean					autoSave = true;
 	public boolean					wasPlaying = false;

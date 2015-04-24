@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.Methods;
 import com.minecraft.client.misc.References;
@@ -130,7 +131,7 @@ public class LoadWorldMenu {
 				img[i] = ImageIO.read(new File(Minecraft.nc.savesDirectory + "\\" + tmp + ".png"));
 			} catch(Exception e) {
 				img[i] = Tile.empty;
-				System.out.println("Could not find an image for " + tmp);
+				Logger.warn("Could not find an image for " + tmp);
 			}
 		}
 		r.loaded = true;

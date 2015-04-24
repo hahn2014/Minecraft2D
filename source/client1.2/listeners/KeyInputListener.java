@@ -9,6 +9,7 @@ import java.nio.file.Path;
 
 import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.InputPane;
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.IO.OptionPane;
 import com.minecraft.client.game.SaveLoad;
 import com.minecraft.client.main.Minecraft;
@@ -30,7 +31,7 @@ public class KeyInputListener implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent event) {
 		if (r.isTyping) {
-			if (NewWorldMenu.finalName.length() <= r.textFieldMaxLength) {
+			if (NewWorldMenu.finalName.length() <= r.textFieldMaxLength - 1) {
 				int key = event.getKeyCode();
 				char c = (char)(key);
 				if (Character.isAlphabetic(c) || Character.isDigit(c) || c == ' ') {
@@ -272,6 +273,7 @@ public class KeyInputListener implements KeyListener{
 								r.fullscreen = !r.fullscreen;
 								break;
 							case 1:
+								Logger.debug("Auto Saving is now " + !r.autoSave);
 								if (r.autoSave) {
 									Minecraft.settings.buttons[1] = "Enable Auto Save Feature";
 								} else {
@@ -280,20 +282,36 @@ public class KeyInputListener implements KeyListener{
 								r.autoSave = !r.autoSave;
 								break;
 							case 2:
+								Logger.debug("Music Playing is now " + !r.playMusic);
 								if (r.playMusic) {
 									Minecraft.settings.buttons[2] = "Enable Music";
 								} else {
 									Minecraft.settings.buttons[2] = "Dissable Music";
 								}
 								r.playMusic = !r.playMusic;
+								if (r.playMusic && Minecraft.soundengine.getMusicClip() != null) {
+									Minecraft.soundengine.getMusicClip().start();
+								} else {
+									if (Minecraft.soundengine.getMusicClip() != null) {
+										Minecraft.soundengine.getMusicClip().stop();
+									}
+								}
 								break;
 							case 3:
+								Logger.debug("Sound Effect Playing is now " + !r.playSoundEF);
 								if (r.playSoundEF) {
 									Minecraft.settings.buttons[3] = "Enable Sound Effects";
 								} else {
 									Minecraft.settings.buttons[3] = "Dissable Sound Effects";
 								}
 								r.playSoundEF = !r.playSoundEF;
+								if (r.playSoundEF && Minecraft.soundengine.getEffectClip() != null) {
+									Minecraft.soundengine.getEffectClip().start();
+								} else {
+									if (Minecraft.soundengine.getEffectClip() != null) {
+										Minecraft.soundengine.getEffectClip().stop();
+									}
+								}
 								break;
 							case 4:
 								try {
@@ -339,7 +357,7 @@ public class KeyInputListener implements KeyListener{
 									LoadWorldMenu.getWorldSelected();
 								}
 							} else if (DeleteWorldMenu.curselect == i) { //on a selected world, we need to delete it now
-								System.out.println("now deleting " + DeleteWorldMenu.worlds.get(i) + ".dat");
+								Logger.debug("now deleting " + DeleteWorldMenu.worlds.get(i) + ".dat");
 								//delete the files
 								try {
 									//delete .dat world file
@@ -367,7 +385,7 @@ public class KeyInputListener implements KeyListener{
 								DeleteWorldMenu.cameFrom = 4;
 							} else if (LoadWorldMenu.curselect == i) { //on a selected world, we need to load it now
 								r.MENU = 6;
-								System.out.println("now loading " + LoadWorldMenu.worlds.get(i) + ".dat");
+								Logger.debug("now loading " + LoadWorldMenu.worlds.get(i) + ".dat");
 								//load the world
 								SaveLoad.Load(LoadWorldMenu.worlds.get(i) + ".dat");
 								r.curWorld = LoadWorldMenu.worlds.get(i);
@@ -453,7 +471,9 @@ public class KeyInputListener implements KeyListener{
 				break;
 			case KeyEvent.VK_O:
 				//skip song
-				Minecraft.soundengine.playNext();
+				if (r.playMusic) {
+					Minecraft.soundengine.playNextSong();
+				}
 				break;
 		}
 	}

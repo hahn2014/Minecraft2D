@@ -8,10 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.InputPane;
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.IO.OptionPane;
 import com.minecraft.client.game.Player;
 import com.minecraft.client.game.SaveLoad;
@@ -94,8 +96,11 @@ public class Minecraft extends Applet implements Runnable {
 		//start sound
 		//set frame to visible
 		frame.setVisible(true);
-		soundengine.playSound("menu1.wav");
-		System.out.println("Finished Settings Things Up");
+		
+		//temporarily dissabling sound cause i like to jam to my jams while coding
+		//soundengine.startWithRandomSong();
+		
+		Logger.info("Finished Settings Things Up");
 	}
 	
 	public void stop() {
@@ -232,6 +237,14 @@ public class Minecraft extends Applet implements Runnable {
 	}
 	
 	public static void main(String[] args) {
+		
+		for (String arg : args) {
+			if (arg.equals("-d")) {
+				Logger.debug = true;
+				Logger.debug("Debug true");
+			}
+		}
+		
 		Minecraft game = new Minecraft();
 		frame.add(game);
 		nc = new NewComputer();

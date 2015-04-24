@@ -11,32 +11,38 @@ import java.net.URL;
 
 import javax.swing.JOptionPane;
 
+import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.Logger;
+
 public class NewComputer {
 	private static String appdata = System.getenv("APPDATA");
-	private int filedirs = 6;
+	public static int filedirs = 5;
 	//set up the initial folders
 	public final static String SoundsDirectory 			= new String(appdata + "\\.MINECRAFT2D\\Sounds");
-	public final static String savesDirectory 		= new String(appdata + "\\.MINECRAFT2D\\saves");
-	public final String gameDirectory 				= new String(appdata + "\\.MINECRAFT2D");
+	public final static String savesDirectory 			= new String(appdata + "\\.MINECRAFT2D\\saves");
+	public final static String SoundEffectDirectory	= new String(SoundsDirectory + "\\Effecfts");
+	public final String gameDirectory 					= new String(appdata + "\\.MINECRAFT2D");
 	private boolean shown = false;
 	
 	public NewComputer() {
 		//we need to check if the files exist
 		if (!checkIfDirExists(SoundsDirectory)) {
-			System.out.println("Sound directory was not found... we need to download everything");
+			Logger.debug("Sound directory was not found... we need to download everything");
 			new File(SoundsDirectory).mkdir();
 		}
+		if (!checkIfDirExists(SoundEffectDirectory)) {
+			Logger.debug("Sound Effect directory was not found... we need to download everything");
+			new File(SoundEffectDirectory).mkdir();
+		}
 		for (int i = 1; i < filedirs; i++) {
-			System.out.println("checking if menu" + i + ".wav exists");
+			Logger.debug("checking if menu" + i + ".wav exists");
 			if (!checkIfFileExists(SoundsDirectory + "\\menu" + i + ".wav")) {
 				if (!shown) {
 					JOptionPane.showConfirmDialog(null, "We noticed some game files are missing...\nPlease wait while we download them for you.", "Please Wait", JOptionPane.OK_OPTION);
 					shown = true;
 				}
-				System.out.println("could not find menu" + i + ".wav");
+				Logger.debug("could not find menu" + i + ".wav");
 				downloadFile("menu" + i + ".wav");
-			} else {
-				System.out.println("menu" + i + ".wav was found, skipping to next file");
 			}
 		}
 	}
@@ -65,16 +71,16 @@ public class NewComputer {
 			in = new BufferedInputStream(new URL("https://github.com/hahn2014/Minecraft2D/raw/master/Recources/sounds/" + filename).openStream());
 		    byte data[] = new byte[1024];
 		    int count;
-	        System.out.println("downloading file to " + SoundsDirectory + "\\" + filename);
+	        Logger.debug("downloading file to " + SoundsDirectory + "\\" + filename);
 		    while((count = in.read(data, 0, 1024)) != -1) {
 		        out.write(data, 0, count);
 		    }
 			out.close();
 			in.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			CrashDumping.DumpCrash(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			CrashDumping.DumpCrash(e);
 		}
 	}
 }

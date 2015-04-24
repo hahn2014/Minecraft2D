@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.IO.OptionPane;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.Methods;
@@ -16,7 +17,6 @@ public class NewWorldMenu {
 
 	public static int curselect = 1;
 
-	private int textwidth;
 	
 	private Color textField = new Color(255, 255, 255);
 	private Color b1 = new Color(0, 0, 0, 100);
@@ -44,7 +44,6 @@ public class NewWorldMenu {
 	}
 	
 	public void tick() {
-		textwidth = m.getStringWidth(finalName, r.font1);
 		if (curselect == 1) { //on text field
 			r.isTyping = true;
 			textField = new Color(255, 255, 255, 255);
@@ -116,7 +115,7 @@ public class NewWorldMenu {
 		g.drawString(finalName,  x + 2,  y + 14);
 		//draw the cursor
 		g.setColor(cursor);
-		g.drawString("|", x + (textwidth + 2), y + 13);
+		g.drawString("|", x + (m.getStringWidth(finalName, r.font1) + 4), y + 13);
 		g.setColor(constant);
 		g.drawString("Creating in: " + finalName + ".dat", x, y + 30);
 		g.drawString(finalName.length() + "/" + r.textFieldMaxLength + " letters", x, y + 45);
@@ -149,7 +148,7 @@ public class NewWorldMenu {
 			r.loaded = false;
 			Minecraft.frame.setTitle(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
 			r.curWorld = finalName;
-			System.out.println(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
+			Logger.info(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
 		} else {
 			try {
 				Minecraft.op = new OptionPane("Woah There!", "You are trying to create a new world without a name! Please enter a valid name then try again.",

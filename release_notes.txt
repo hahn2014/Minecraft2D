@@ -1,10 +1,13 @@
+BUILD 1.2.1
+-Chaned sound enine to use standard java library
+-removed lwjgl library to shirnk the file size even more
+
 BUILD 1.2
 -Load and delete world's scroll bar is now properlly working
 -Loading a world (pressing enter while selecting one) will do nothing
 -Sound engine fully operational
 -removed sound files from jar to make file smaller
 -added a file downloader to download sound files when first loading the game
--more to come
 
 BUILD 1.1
 -initial build

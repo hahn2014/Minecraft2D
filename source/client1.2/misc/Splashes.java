@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.Methods;
 
@@ -40,6 +41,7 @@ public class Splashes {
 	}
 
 	public static void getRandSplash() {
+		Logger.debug("Getting random splash for main menu");
 		r.splash = splashes.get(random.nextInt(splashes.size()));
 	}
 	
