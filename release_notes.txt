@@ -1,10 +1,16 @@
+BUILD 1.2.5
+-added menu click sound effects
+-you can now move the window when in windowed mode
+-when the window is currently being dragged, rending process is stopped to save memory
+-more to come in next update
+
 BUILD 1.2.1
--Chaned sound enine to use standard java library
--removed lwjgl library to shirnk the file size even more
+-Changed sound enine to use standard java library
+-removed lwjgl library to shrink the file size even more
 -fixed bug where you could type 21 letters in new world textbox instead of just 20
--fixed cursor on textfield not properly alligning with text
+-fixed cursor on textfield not properly aligning with text
 -added method for sound effect playing, for furture use.. not currently in use
--reworked sound playin method, works much better now
+-reworked sound playing method, works much better now
 -increased volume on sound, was too quite before
 -added a Logger method, stolen shamelessly from my friend Mason.
 -replaced all println lines with logger events

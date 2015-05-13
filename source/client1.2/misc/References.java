@@ -27,7 +27,7 @@ public class References {
 	
 	
 	public final String 			BUILD = "Pre-Alpha BUILD";
-	public final String				VERSION = "0.1.2.1";
+	public final String				VERSION = "0.1.2.5";
 	public final String				NAME = "Minecraft 2D";
 	public String					curWorld = "";
 	public String					splash = "";
@@ -46,6 +46,7 @@ public class References {
 	
 	
 	public Point 					mouse = new Point(0, 0);
+	public Point					moveFramePoint = new Point(0, 0);
 	
 	public boolean 					loaded = false;
 	public boolean 					isRunning = false;
@@ -65,6 +66,8 @@ public class References {
 	public boolean					inventoryOpen = false;
 	public boolean					craftingOpen = false;
 	public boolean					settingsOpen = false;
+	public boolean					moveFrame = false;
+	public boolean 					dragging = false;
 	
 	
 	public final Font				font1 = new Font(Font.DIALOG, Font.PLAIN, 12);

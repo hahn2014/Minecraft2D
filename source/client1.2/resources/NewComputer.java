@@ -15,12 +15,14 @@ import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.Logger;
 
 public class NewComputer {
-	private static String appdata = System.getenv("APPDATA");
-	public static int filedirs = 5;
+	public static String appdata = System.getenv("APPDATA");
+	public static int songs = 5;
+	public static int effects = 1;
 	//set up the initial folders
 	public final static String SoundsDirectory 			= new String(appdata + "\\.MINECRAFT2D\\Sounds");
 	public final static String savesDirectory 			= new String(appdata + "\\.MINECRAFT2D\\saves");
-	public final static String SoundEffectDirectory	= new String(SoundsDirectory + "\\Effecfts");
+	public final static String dumpDirectory			= new String(appdata + "\\.MINECRAFT2D\\Dumps");
+	public final static String SoundEffectDirectory		= new String(SoundsDirectory + "\\Effecfts");
 	public final String gameDirectory 					= new String(appdata + "\\.MINECRAFT2D");
 	private boolean shown = false;
 	
@@ -34,15 +36,34 @@ public class NewComputer {
 			Logger.debug("Sound Effect directory was not found... we need to download everything");
 			new File(SoundEffectDirectory).mkdir();
 		}
-		for (int i = 1; i < filedirs; i++) {
-			Logger.debug("checking if menu" + i + ".wav exists");
+		if (!checkIfDirExists(dumpDirectory)) {
+			Logger.debug("Dump directory was not found... we need to create it");
+			new File(dumpDirectory).mkdir();
+		}
+		//download any missing songs
+		for (int i = 1; i < songs; i++) {
 			if (!checkIfFileExists(SoundsDirectory + "\\menu" + i + ".wav")) {
 				if (!shown) {
 					JOptionPane.showConfirmDialog(null, "We noticed some game files are missing...\nPlease wait while we download them for you.", "Please Wait", JOptionPane.OK_OPTION);
 					shown = true;
 				}
-				Logger.debug("could not find menu" + i + ".wav");
+				Logger.debug("could not find song menu" + i + ".wav");
 				downloadFile("menu" + i + ".wav");
+			} else {
+				//Logger.debug("we found the song menu" + i + ".wav");
+			}
+		}
+		//download any missing effects
+		for (int i = 1; i < effects; i++) {
+			if (!checkIfFileExists(SoundEffectDirectory + "\\effect" + i + ".wav")) {
+				if (!shown) {
+					JOptionPane.showConfirmDialog(null, "We noticed some game files are missing...\nPlease wait while we download them for you.", "Please Wait", JOptionPane.OK_OPTION);
+					shown = true;
+				}
+				Logger.debug("could not find sound effect effect" + i + ".wav");
+				downloadFile("Effecfts/effect" + i + ".wav");
+			} else {
+				//Logger.debug("we found the effect effect" + i + ".wav");
 			}
 		}
 	}

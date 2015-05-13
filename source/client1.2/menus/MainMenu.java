@@ -78,10 +78,14 @@ public class MainMenu {
 		//title
 		g.drawImage(Tile.logo, (r.PIXEL.width / 2) - (Tile.logo.getWidth() / 2), 5, 279, 50, null);
 		//version
-		g.drawString(r.BUILD + " " + r.VERSION, 6, r.PIXEL.height - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
+		g.drawString(r.BUILD + " " + r.VERSION, 4, r.PIXEL.height - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
 		//copyright
 		g.drawString("Copyright Bryce Hahn. Do not distribute!", (r.PIXEL.width - 6) - (m.getStringWidth("Copyright Bryce Hahn. Do not distribute!", r.font3)),
 				r.PIXEL.height - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
+		//move frame
+		g.setFont(r.font2);
+		g.drawString("Press F12 to start/stop", 4, (r.PIXEL.height - 20) - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
+		g.drawString("moving screen", 20, (r.PIXEL.height - 12) - (m.getStringHeight(r.BUILD + " " + r.VERSION, r.font3) / 2));
 		g.setFont(r.font1);
 		//buttons
 		for (int i = 0; i < 5; i++) {

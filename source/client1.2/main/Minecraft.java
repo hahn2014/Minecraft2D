@@ -45,6 +45,8 @@ public class Minecraft extends Applet implements Runnable {
 	
 	public Image					screen;
 	
+	private static Minecraft		game;
+	
 	public static Splashes			splashes;
 	public static SoundEngine 		soundengine;
 	public static Player			player;
@@ -98,6 +100,7 @@ public class Minecraft extends Applet implements Runnable {
 		frame.setVisible(true);
 		
 		//temporarily dissabling sound cause i like to jam to my jams while coding
+	
 		//soundengine.startWithRandomSong();
 		
 		Logger.info("Finished Settings Things Up");
@@ -144,60 +147,62 @@ public class Minecraft extends Applet implements Runnable {
 	}
 	
 	public void render() {
-		Graphics g = screen.getGraphics();
-		switch (r.MENU) {
-			case 0:
-				main.render(g); 		//Main Menu
-				splashes.render(g);		//render splashes
-				break;
-			case 1:
-				newWorld.render(g); 	//New World Menu
-				break;
-			case 2:
-				settings.render(g);		//Settings Menu
-				break;
-			case 3:
-				deleteWorld.render(g);	//Delete World Menu
-				break;
-			case 4:
-				loadWorld.render(g);	//Load World Menu
-				break;
-			case 5:
-				pauseMenu.render((Graphics2D)(g)); 	//Pause Menu
-				break;
-			case 6:
-				if (r.hasStarted) {
-					g.setFont(r.font1);
-					g.setColor(r.color1);
-					g.fillRect(0, 0, r.PIXEL.width, r.PIXEL.height);
-					sky.render(g);
-					wr.render(g, (int)(r.sx), (int)(r.sy), (int)(r.PIXEL.width / Tile.tileSize), (int)(r.PIXEL.height / Tile.tileSize));
-					player.render(g);
-					if (r.inventoryOpen) {
-						//inventory.render(g);
-					} else if (r.chestOpen) {
-						//chest.render(g);
-					} else if (r.craftingOpen) {
-						//crafting.render(g);
+		if (r.dragging != true) {
+			Graphics g = screen.getGraphics();
+			switch (r.MENU) {
+				case 0:
+					main.render(g); 		//Main Menu
+					splashes.render(g);		//render splashes
+					break;
+				case 1:
+					newWorld.render(g); 	//New World Menu
+					break;
+				case 2:
+					settings.render(g);		//Settings Menu
+					break;
+				case 3:
+					deleteWorld.render(g);	//Delete World Menu
+					break;
+				case 4:
+					loadWorld.render(g);	//Load World Menu
+					break;
+				case 5:
+					pauseMenu.render((Graphics2D)(g)); 	//Pause Menu
+					break;
+				case 6:
+					if (r.hasStarted) {
+						g.setFont(r.font1);
+						g.setColor(r.color1);
+						g.fillRect(0, 0, r.PIXEL.width, r.PIXEL.height);
+						sky.render(g);
+						wr.render(g, (int)(r.sx), (int)(r.sy), (int)(r.PIXEL.width / Tile.tileSize), (int)(r.PIXEL.height / Tile.tileSize));
+						player.render(g);
+						if (r.inventoryOpen) {
+							//inventory.render(g);
+						} else if (r.chestOpen) {
+							//chest.render(g);
+						} else if (r.craftingOpen) {
+							//crafting.render(g);
+						}
+						//console.render(g);
+						if (r.settingsOpen) {
+							//pause.render(g);
+						}
+						g.setFont(r.font2);
+						g.setColor(r.color2);
+						g.drawString(r.BUILD + " " + r.VERSION, 311, 8);
 					}
-					//console.render(g);
-					if (r.settingsOpen) {
-						//pause.render(g);
-					}
-					g.setFont(r.font2);
-					g.setColor(r.color2);
-					g.drawString(r.BUILD + " " + r.VERSION, 311, 8);
-				}
-				break;
+					break;
+			}
+			FPS.render(g);
+			if (op.getRender())
+				op.render(g);
+			if (ip.getRender())
+				ip.render(g);
+			g = getGraphics();
+			g.drawImage(screen, 0, 0, r.SIZE.width, r.SIZE.height, null);
+			g.dispose();
 		}
-		FPS.render(g);
-		if (op.getRender())
-			op.render(g);
-		if (ip.getRender())
-			ip.render(g);
-		g = getGraphics();
-		g.drawImage(screen, 0, 0, r.SIZE.width, r.SIZE.height, null);
-		g.dispose();
 	}
 	
 	@Override
@@ -245,7 +250,7 @@ public class Minecraft extends Applet implements Runnable {
 			}
 		}
 		
-		Minecraft game = new Minecraft();
+		game = new Minecraft();
 		frame.add(game);
 		nc = new NewComputer();
 		player = new Player(Tile.tileSize, Tile.tileSize * 2); //1 block wide, 2 high
@@ -266,5 +271,9 @@ public class Minecraft extends Applet implements Runnable {
 		sl = new SaveLoad();
 		//start game
 		game.start();
+	}
+	
+	public static Minecraft getMinecraft() {
+		return game;
 	}
 }

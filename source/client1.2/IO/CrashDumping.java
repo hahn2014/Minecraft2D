@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.minecraft.client.main.Minecraft;
+import com.minecraft.client.resources.NewComputer;
 import com.minecraft.client.resources.Tile;
 
 public class CrashDumping {
@@ -17,7 +18,7 @@ public class CrashDumping {
 			DateFormat dateFormat = new SimpleDateFormat("MM_dd_yyyy_HH_mm_ss");
 			Date date = new Date();
 			
-			PrintWriter writer = new PrintWriter("errordump" + dateFormat.format(date) + ".log", "UTF-8");
+			PrintWriter writer = new PrintWriter(NewComputer.dumpDirectory + "\\" + dateFormat.format(date) + ".log", "UTF-8");
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			exception.printStackTrace(pw);

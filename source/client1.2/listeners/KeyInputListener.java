@@ -200,7 +200,7 @@ public class KeyInputListener implements KeyListener{
 				}
 				break;
 			case KeyEvent.VK_ENTER:
-				if (!Minecraft.op.getRender() && !Minecraft.ip.getRender()) { 
+				if (!Minecraft.op.getRender() && !Minecraft.ip.getRender()) {
 					switch (r.MENU) {
 					case 0: //main menu
 						switch (MainMenu.curselect) {
@@ -443,6 +443,7 @@ public class KeyInputListener implements KeyListener{
 						}
 					}
 				}
+				Minecraft.soundengine.playSoundEffect("effect1.wav");
 				break;
 			case KeyEvent.VK_BACK_SPACE:
 				if (r.MENU == 1 && r.isTyping) { //new world menu
@@ -468,12 +469,7 @@ public class KeyInputListener implements KeyListener{
 			case KeyEvent.VK_F10:
 				Minecraft.setFrameSize(!r.fullscreen);
 				r.fullscreen = !r.fullscreen;
-				break;
-			case KeyEvent.VK_O:
-				//skip song
-				if (r.playMusic) {
-					Minecraft.soundengine.playNextSong();
-				}
+				Logger.debug("Fullscreen [" + r.fullscreen + "]");
 				break;
 		}
 	}

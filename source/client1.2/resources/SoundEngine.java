@@ -21,17 +21,18 @@ public class SoundEngine {
     private Clip effectClip;
     
     private References r;
+    private Random random;
     
     public SoundEngine() {
     	r = Minecraft.r;
+    	random = new Random();
     }
     
     public void startWithRandomSong() {
     	r.playMusic = true;
-    	Random random = new Random();
     	random.setSeed(System.currentTimeMillis());
     	Logger.info("choosing random song to play on start up");
-    	playSong("menu" + (random.nextInt(NewComputer.filedirs) + 1) + ".wav");
+    	playSong("menu" + (random.nextInt(NewComputer.songs) + 1) + ".wav");
     }
     
     public void playSong(String file) {
@@ -56,7 +57,7 @@ public class SoundEngine {
     
     public void playNextSong() {
     	Logger.info("menu" + cursong + ".wav has finished playing.");
-    	if (cursong < NewComputer.filedirs) {
+    	if (cursong < NewComputer.songs) {
     		musicClip.close();
     		cursong++;
     		//end current song
@@ -69,11 +70,9 @@ public class SoundEngine {
     public void playSoundEffect(String file) {
     	if (r.playSoundEF) {
 	        try {
-				audioStream = AudioSystem.getAudioInputStream(new File(NewComputer.SoundEffectDirectory + file));
+				audioStream = AudioSystem.getAudioInputStream(new File(NewComputer.SoundEffectDirectory + "\\" + file));
 				effectClip = AudioSystem.getClip();
 				effectClip.open(audioStream);
-				FloatControl gainControl = (FloatControl) effectClip.getControl(FloatControl.Type.MASTER_GAIN);
-				gainControl.setValue(gainControl.getMaximum());
 				effectClip.start();
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -81,6 +80,12 @@ public class SoundEngine {
 	            System.exit(1);
 	        }
     	}
+    }
+    
+    public void playRandomEffect() {
+    	random.setSeed(System.currentTimeMillis());
+    	Logger.debug("choosing random effect");
+    	playSoundEffect("effect" + (random.nextInt(NewComputer.effects) + 1) + ".wav");
     }
     
     public Clip getMusicClip() {
