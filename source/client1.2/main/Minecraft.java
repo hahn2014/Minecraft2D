@@ -100,8 +100,7 @@ public class Minecraft extends Applet implements Runnable {
 		frame.setVisible(true);
 		
 		//temporarily dissabling sound cause i like to jam to my jams while coding
-	
-		//soundengine.startWithRandomSong();
+		soundengine.startWithRandomSong();
 		
 		Logger.info("Finished Settings Things Up");
 	}

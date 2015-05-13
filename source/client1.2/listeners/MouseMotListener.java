@@ -17,7 +17,6 @@ public class MouseMotListener implements MouseMotionListener {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		r.mouse.setLocation(e.getX(), e.getY());
-		System.out.println(r.moveFrame);
 		if (r.moveFrame == true) {
 			m.frame.setLocation((int)(e.getXOnScreen() - r.moveFramePoint.getX()), (int)(e.getYOnScreen() - r.moveFramePoint.getY()));
 		}

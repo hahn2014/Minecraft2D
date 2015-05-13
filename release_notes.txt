@@ -2,7 +2,8 @@ BUILD 1.2.5
 -added menu click sound effects
 -you can now move the window when in windowed mode
 -when the window is currently being dragged, rending process is stopped to save memory
--more to come in next update
+-crash dumping will now dump the file in the "Dump" folder in the appdata directory
+-re-enabled sound, was disabled for debuging and forgot to re-enable it
 
 BUILD 1.2.1
 -Changed sound enine to use standard java library
