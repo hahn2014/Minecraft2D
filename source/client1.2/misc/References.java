@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 
@@ -27,7 +28,7 @@ public class References {
 	
 	
 	public final String 			BUILD = "Pre-Alpha BUILD";
-	public final String				VERSION = "0.1.2.5";
+	public final String				VERSION = "0.1.2.6";
 	public final String				NAME = "Minecraft 2D";
 	public String					curWorld = "";
 	public String					splash = "";
@@ -47,6 +48,8 @@ public class References {
 	
 	public Point 					mouse = new Point(0, 0);
 	public Point					moveFramePoint = new Point(0, 0);
+	public Point					framePos = new Point((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2) - (int)(SIZE.getWidth() / 2),
+									(int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2) - (int)(SIZE.getHeight() / 2));
 	
 	public boolean 					loaded = false;
 	public boolean 					isRunning = false;

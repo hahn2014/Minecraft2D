@@ -236,7 +236,7 @@ public class Minecraft extends Applet implements Runnable {
 			r.SIZE = new Dimension(1200, 700);
 			frame.setSize(r.SIZE);
 			frame.getContentPane().setPreferredSize(r.SIZE);
-			frame.setLocationRelativeTo(null);
+			frame.setLocation(r.framePos);
 		}
 	}
 	

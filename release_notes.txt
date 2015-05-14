@@ -1,3 +1,6 @@
+BUILD 1.2.6
+-when resizing window from fullscreen to windowed, the program remembers the windows last position and sets it there.. not too important
+
 BUILD 1.2.5
 -added menu click sound effects
 -you can now move the window when in windowed mode

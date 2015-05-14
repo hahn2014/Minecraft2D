@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputListener;
 
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.misc.References;
 
@@ -40,6 +41,9 @@ public class MouseInpListener implements MouseInputListener{
 	public void mouseReleased(MouseEvent event) {
 		r.moveFrame = false;
 		r.dragging = false;
+		//lets save where the frame was last dropped at
+		Logger.debug("New frame pos(" + (event.getXOnScreen() - event.getX()) + ", " + (event.getYOnScreen() - event.getY()) + ")");
+		r.framePos = new Point((event.getXOnScreen() - event.getX()), (event.getYOnScreen() - event.getY()));
 	}
 	public void mouseDragged(MouseEvent event) {}
 	public void mouseMoved(MouseEvent event) {}
