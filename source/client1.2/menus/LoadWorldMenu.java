@@ -49,7 +49,9 @@ public class LoadWorldMenu {
 		widthtimes = (r.PIXEL.width / r.imgWidth) + 1;
 		heighttimes = (r.PIXEL.height / r.imgHeight) + 1;
 		listWorlds();
-		getWorldSelected();
+		if (r.worldsCount > 0) {
+			getWorldSelected();
+		}
 	}
 	
 	public void tick() {

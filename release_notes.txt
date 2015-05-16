@@ -1,3 +1,9 @@
+BUILD 1.2.7
+-Loading a world now will properly load from a file
+-creating and loading still not working, working out the glitches
+-worlds randomly generate when creating new world (wont be noticed untill loading works)
+-more to come
+
 BUILD 1.2.6
 -when resizing window from fullscreen to windowed, the program remembers the windows last position and sets it there.. not too important
 

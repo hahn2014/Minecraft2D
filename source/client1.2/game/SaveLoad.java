@@ -1,5 +1,6 @@
 package com.minecraft.client.game;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -15,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.misc.References;
 import com.minecraft.client.resources.NewComputer;
@@ -25,8 +27,9 @@ public class SaveLoad {
 	private static References r;
 	private static String splitted;
 	
+	@SuppressWarnings("static-access")
 	public SaveLoad() {
-		r = Minecraft.r;
+		r = Minecraft.getMinecraft().r;
 	}
 
 	public static void getScreenShot(String name) {
@@ -43,8 +46,7 @@ public class SaveLoad {
 	
 	@SuppressWarnings("static-access")
 	public static void Save(String name) {
-		int startTime = (int)(System.currentTimeMillis());
-		int endTime = 0;
+		int startTime = (int)(System.currentTimeMillis()), endTime = 0;
 		File file = new File(NewComputer.savesDirectory + "\\" + name + ".dat");
 		try {
 			//now save the world info
@@ -52,6 +54,8 @@ public class SaveLoad {
 			pw.write("~" + r.sx + ",");
 			pw.newLine();
 			pw.write("`" + r.sy + ";"); //player pos
+			pw.newLine();
+			pw.write("*" + Minecraft.getMinecraft().player.pos.x + "," + Minecraft.getMinecraft().player.pos.y + ";");
 			pw.newLine();
 			pw.write("!" + (int)(r.direction) + ";"); //facing direction
 			pw.newLine();
@@ -63,14 +67,14 @@ public class SaveLoad {
 			}
 			pw.close();
 			endTime = (int)(System.currentTimeMillis());
-			System.out.println("Time it took: " + (endTime - startTime));
+			System.out.println("Time it took to save world: " + (endTime - startTime));
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "ERROR!\n" + ex, "System.ERROR(4) No Such World Exists", JOptionPane.NO_OPTION);
 			CrashDumping.DumpCrash(ex);
 		}
 	}
 	
-	@SuppressWarnings({ "unused", "static-access" })
+	@SuppressWarnings("static-access" )
 	public static void Load(String name) {
 		int startTime = (int)(System.currentTimeMillis()), endTime = 0;
 		File file = new File(NewComputer.savesDirectory + "\\" + name);
@@ -79,12 +83,19 @@ public class SaveLoad {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String words;
 			while ((words = br.readLine()) != null) {
-				if        (words.startsWith("~")) { //x
+				if        (words.startsWith("~")) { //sx
 					splitted = words.substring(1, words.length() - 1);
 					r.sx = Double.parseDouble(splitted);
-				} else if (words.startsWith("`")) { //y
+				} else if (words.startsWith("`")) { //sy
 					splitted = words.substring(1, words.length() - 1);
 					r.sy = Double.parseDouble(splitted);
+				} else if (words.startsWith("*")) { //player pos
+					splitted = words.substring(1, words.length() - 1);
+					double x = 0.0, y = 0.0;
+					String[] tmp = splitted.split(",");
+					x = Double.parseDouble(tmp[0]);
+					y = Double.parseDouble(tmp[1]);
+					Minecraft.getMinecraft().player.pos = new Point((int)x, (int)y);
 				} else if (words.startsWith("!")) { //facing
 					splitted = words.substring(1, words.length() - 1);
 					r.direction = Double.parseDouble(splitted);
@@ -99,8 +110,10 @@ public class SaveLoad {
 				}
 			}
 			br.close();
-			//get world blocks
-			//get date time
+			endTime = (int)(System.currentTimeMillis());
+			r.MENU = 6;
+			Minecraft.getMinecraft().player.spawn();
+			Logger.info("Time it took to load world: " + (endTime - startTime));
 		} catch (Exception ex) {
 			JOptionPane.showMessageDialog(null, "ERROR!\n" + ex, "System.ERROR(4) No Such World Exists", JOptionPane.NO_OPTION);
 			CrashDumping.DumpCrash(ex);

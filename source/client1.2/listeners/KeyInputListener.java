@@ -24,7 +24,8 @@ import com.minecraft.client.misc.Splashes;
 import com.minecraft.client.resources.Tile;
 
 public class KeyInputListener implements KeyListener{
-	private References r = Minecraft.r;
+	@SuppressWarnings("static-access")
+	private References r = Minecraft.getMinecraft().r;
 	
 	double ans;
 	@SuppressWarnings("static-access")
@@ -63,7 +64,11 @@ public class KeyInputListener implements KeyListener{
 		switch (key) {
 			case KeyEvent.VK_D:
 				r.isMoving = true;
-				r.direction = Minecraft.player.movingSpeed;
+				r.direction = Minecraft.getMinecraft().player.movingSpeed;
+				break;
+			case KeyEvent.VK_A:
+				r.isMoving = true;
+				r.direction = -Minecraft.getMinecraft().player.movingSpeed;
 				break;
 			case KeyEvent.VK_UP:
 				switch (r.MENU) {
@@ -102,7 +107,9 @@ public class KeyInputListener implements KeyListener{
 						} else {
 							LoadWorldMenu.curselect = -1;
 						}
-						LoadWorldMenu.getWorldSelected();
+						if (r.worldsCount > 0) {
+							LoadWorldMenu.getWorldSelected();
+						}
 						break;
 					case 5: //pause menu
 						if (PauseMenu.curselect > 0) {
@@ -393,6 +400,7 @@ public class KeyInputListener implements KeyListener{
 								LoadWorldMenu.curselect = -1;
 								LoadWorldMenu.lastWorld = LoadWorldMenu.worlds.get(i);
 								r.loaded = true;
+								r.hasStarted = true;
 							}
 						}
 						break;

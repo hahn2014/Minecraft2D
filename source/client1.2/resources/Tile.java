@@ -23,7 +23,7 @@ public class Tile {
 	public static final int craftingLength = 3;
 	public static final int craftingHeight = 3;
 	
-	/*
+	/* IDs
 	 * blank = 0 -- dirt = 1 -- grass = 2 -- snow grass = 3 -- stone = 4 -- cobblestone = 5 -- bedrock = 6 -- log = 7 -- plank = 8
 	 * leaves = 9
 	 */

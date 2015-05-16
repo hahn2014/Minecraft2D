@@ -2,6 +2,7 @@ package com.minecraft.client.menus;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import com.minecraft.client.IO.CrashDumping;
@@ -53,7 +54,8 @@ public class PauseMenu {
 		}
 	}
 	
-	public void render(Graphics2D g2d) {
+	public void render(Graphics g) {
+		Graphics2D g2d = (Graphics2D)(g);
 		g2d.setFont(r.font1);
 		g2d.setColor(bg);
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));

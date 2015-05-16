@@ -3,15 +3,18 @@ package com.minecraft.client.game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.Logger;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.DoubleRectangle;
 import com.minecraft.client.menus.LoadWorldMenu;
 import com.minecraft.client.menus.NewWorldMenu;
 import com.minecraft.client.misc.References;
+import com.minecraft.client.resources.Blocks;
 import com.minecraft.client.resources.Tile;
 
 public class Player extends DoubleRectangle {
@@ -33,8 +36,9 @@ public class Player extends DoubleRectangle {
 	
 	private static References r;
 	
+	@SuppressWarnings("static-access")
 	public Player(int width, int height) {
-		r = Minecraft.r;
+		r = Minecraft.getMinecraft().r;
 		setBounds((r.PIXEL.width / 2), (r.PIXEL.height / 2) - (height / 2), width, height);
 		r.direction = movingSpeed;
 		timer = new Timer();
@@ -48,6 +52,20 @@ public class Player extends DoubleRectangle {
 				fallingSpeed = 1.3;
 			}
 		}, 8000);
+	}
+	
+	public void spawn() {
+		pos.x = new Random().nextInt(WorldRender.worldInt);
+		pos.y = 0;
+		System.out.println("player x = " + pos.x);
+		System.out.println("player y = " + pos.y);
+		//now push player up untill he reaches free space
+//		int YY = pos.y;
+//		while (Minecraft.getMinecraft().wr.block[pos.x][YY].getID() != Blocks.BLANK &&
+//				Minecraft.getMinecraft().wr.block[pos.x][YY + 1].getID() != Blocks.BLANK) {
+//			YY++;
+//		}
+		Logger.debug("Done setting up spawn");
 	}
 	
 	public void recoverHealth() {
@@ -81,10 +99,10 @@ public class Player extends DoubleRectangle {
 							String tmp = LoadWorldMenu.lastWorld;
 							tmp = tmp.replace(".dat", "");
 							SaveLoad.getScreenShot(tmp);
-							//SaveLoad.Save(LoadWorldMenu.lastWorld);
+							SaveLoad.Save(LoadWorldMenu.lastWorld);
 						} else { //creating new world
 							SaveLoad.getScreenShot(NewWorldMenu.finalName);
-							//SaveLoad.Save(NewWorldMenu.finalname);
+							SaveLoad.Save(NewWorldMenu.finalName);
 						}
 						endtime = System.currentTimeMillis();
 						//console.showMessage("AutoSave completed in " + (endtime - starttime) + " seconds", 10000);
@@ -122,7 +140,7 @@ public class Player extends DoubleRectangle {
 			r.autoSave = true;
 			WorldRender.percent = 0;
 		}
-		if (r.isMoving && !r.inventoryOpen && !r.settingsOpen && !r.chestOpen && !r.craftingOpen /** && !command.typing**/) {
+		if (r.isMoving && !r.inventoryOpen && !r.settingsOpen && !r.chestOpen && !r.craftingOpen && !r.isTyping) {
 			boolean canMove = false;
 			if (r.direction == movingSpeed) {
 				canMove = isCollindingWithBlock(new Point((int) (x + (width) - 1), (int) (y)), new Point((int) (x + width) - 1, (int) (y + (height - 2))));
@@ -168,7 +186,7 @@ public class Player extends DoubleRectangle {
 		for (int x = (int) (this.x / Tile.tileSize); x < (int) (this.x / Tile.tileSize + 2); x++) {
 			for (int y = (int) (this.y / Tile.tileSize); y < (int) (this.y / Tile.tileSize + 1); y++) {
 				if (x >= 0 && y >= 0 && x < WorldRender.block.length && y < WorldRender.block[0].length) {
-					if (WorldRender.block[x][y].id != Tile.blank) {
+					if (WorldRender.block[x][y].getID() != Blocks.BLANK) {
 						if (WorldRender.block[x][y].contains(pt1) || WorldRender.block[x][y].contains(pt2)) {
 							return true;
 						}
@@ -181,12 +199,12 @@ public class Player extends DoubleRectangle {
 	
 	public void render(Graphics g) {
 		// draw the health on the screen
-		g.setColor(Color.BLACK);
 		g.drawString("Health: " + (int) (curHealth), 1, 10);
+		g.setColor(Color.BLACK);
 		if (r.direction == movingSpeed) {
-			g.drawRect((int)r.sx, (int)r.sy, (int)((x + width) - r.sx), (int)((y + height) - r.sy));
+			g.fillRect((int)r.sx, (int)r.sy, (int)((x + width) - r.sx), (int)((y + height) - r.sy));
 		} else if (r.direction == -movingSpeed) {
-			g.drawRect((int)r.sx, (int)r.sy, (int)((x + width) - r.sx), (int)((y + height) - r.sy));
+			g.fillRect((int)r.sx, (int)r.sy, (int)((x + width) - r.sx), (int)((y + height) - r.sy));
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.minecraft.client.resources;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -28,8 +29,22 @@ public class Block extends Rectangle{
 		ID = id;
 	}
 	
+	public Point getLocation() {
+		return new Point(x, y);
+	}
+	
+	public void setLocation(int X, int Y) {
+		x = X;
+		y = Y;
+	}
+	
+	public void setLocation(Point loc) {
+		x = loc.x;
+		y = loc.y;
+	}
+	
 	public void render(Graphics g) {
-		if (id != Tile.empty) {
+		if (ID != Blocks.BLANK) {
 			g.drawImage(id, x - (int) (r.sx), y - (int) (r.sy), x + width - (int) (r.sx), y + height - (int) (r.sy), null);
 		}
 	}

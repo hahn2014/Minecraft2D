@@ -4,34 +4,18 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import com.minecraft.client.IO.CrashDumping;
-import com.minecraft.client.IO.InputPane;
-import com.minecraft.client.IO.Logger;
-import com.minecraft.client.IO.OptionPane;
-import com.minecraft.client.game.Player;
-import com.minecraft.client.game.SaveLoad;
-import com.minecraft.client.game.Sky;
-import com.minecraft.client.game.WorldRender;
-import com.minecraft.client.listeners.KeyInputListener;
-import com.minecraft.client.listeners.MouseInpListener;
-import com.minecraft.client.listeners.MouseMotListener;
-import com.minecraft.client.listeners.MouseWhlListener;
+import com.minecraft.client.IO.*;
+import com.minecraft.client.game.*;
+import com.minecraft.client.listeners.*;
 import com.minecraft.client.math.FPS;
-import com.minecraft.client.menus.DeleteWorldMenu;
-import com.minecraft.client.menus.LoadWorldMenu;
-import com.minecraft.client.menus.MainMenu;
-import com.minecraft.client.menus.NewWorldMenu;
-import com.minecraft.client.menus.PauseMenu;
-import com.minecraft.client.menus.SettingsMenu;
-import com.minecraft.client.misc.References;
-import com.minecraft.client.misc.Splashes;
+import com.minecraft.client.menus.*;
+import com.minecraft.client.misc.*;
 import com.minecraft.client.resources.NewComputer;
 import com.minecraft.client.resources.SoundEngine;
 import com.minecraft.client.resources.Tile;
@@ -40,7 +24,6 @@ public class Minecraft extends Applet implements Runnable {
 	private static final long serialVersionUID = 6493530810487404301L;
 
 	public static References 		r;
-	
 	public static JFrame 			frame = new JFrame();
 	
 	public Image					screen;
@@ -100,6 +83,7 @@ public class Minecraft extends Applet implements Runnable {
 		frame.setVisible(true);
 		
 		//temporarily dissabling sound cause i like to jam to my jams while coding
+		
 		soundengine.startWithRandomSong();
 		
 		Logger.info("Finished Settings Things Up");
@@ -132,9 +116,9 @@ public class Minecraft extends Applet implements Runnable {
 				pauseMenu.tick();	//Pause Menu
 				break;
 			case 6:					//in game
+				sky.tick();
 				wr.tick((int)(r.sx), (int)(r.sy), (int)(r.PIXEL.width / Tile.tileSize) + 1, (int) (r.PIXEL.height / Tile.tileSize) + 1);
 				player.tick();
-				sky.tick();
 				//if (console.typing || console.dispMessage) {
 				//    console.tick();
 				//}
@@ -166,7 +150,7 @@ public class Minecraft extends Applet implements Runnable {
 					loadWorld.render(g);	//Load World Menu
 					break;
 				case 5:
-					pauseMenu.render((Graphics2D)(g)); 	//Pause Menu
+					pauseMenu.render(g); 	//Pause Menu
 					break;
 				case 6:
 					if (r.hasStarted) {
@@ -174,7 +158,7 @@ public class Minecraft extends Applet implements Runnable {
 						g.setColor(r.color1);
 						g.fillRect(0, 0, r.PIXEL.width, r.PIXEL.height);
 						sky.render(g);
-						wr.render(g, (int)(r.sx), (int)(r.sy), (int)(r.PIXEL.width / Tile.tileSize), (int)(r.PIXEL.height / Tile.tileSize));
+						wr.render(g, (int)(r.sx), (int)(r.sy), (int)(r.PIXEL.width / Tile.tileSize) + 1, (int)(r.PIXEL.height / Tile.tileSize) + 1);
 						player.render(g);
 						if (r.inventoryOpen) {
 							//inventory.render(g);
@@ -184,9 +168,6 @@ public class Minecraft extends Applet implements Runnable {
 							//crafting.render(g);
 						}
 						//console.render(g);
-						if (r.settingsOpen) {
-							//pause.render(g);
-						}
 						g.setFont(r.font2);
 						g.setColor(r.color2);
 						g.drawString(r.BUILD + " " + r.VERSION, 311, 8);
@@ -199,7 +180,7 @@ public class Minecraft extends Applet implements Runnable {
 			if (ip.getRender())
 				ip.render(g);
 			g = getGraphics();
-			g.drawImage(screen, 0, 0, r.SIZE.width, r.SIZE.height, null);
+			g.drawImage(screen, 0, 0, r.SIZE.width, r.SIZE.height, 0, 0, r.PIXEL.width, r.PIXEL.height, null);
 			g.dispose();
 		}
 	}
@@ -257,10 +238,7 @@ public class Minecraft extends Applet implements Runnable {
 		FPS.alterFPSCap(60.0);
 		//init game objects
 		new Tile(); //loading images
-		
-		//loadWorld = new LoadWorldMenu();
 		settings = new SettingsMenu();
-		//delete = new DeleteMenu();
 		main = new MainMenu();
 		newWorld = new NewWorldMenu();
 		loadWorld = new LoadWorldMenu();
