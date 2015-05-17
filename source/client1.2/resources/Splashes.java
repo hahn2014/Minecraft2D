@@ -1,4 +1,4 @@
-package com.minecraft.client.misc;
+package com.minecraft.client.resources;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,9 +13,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.Logger;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.Methods;
+import com.minecraft.client.misc.References;
 
 public class Splashes {
 
@@ -36,38 +38,57 @@ public class Splashes {
 		random = new Random();
 		random.setSeed(System.currentTimeMillis());
 		splashes = new ArrayList<>();
-		loadSplashes();
+		try {
+			loadSplashesOnline();
+		} catch (IOException e) {
+			Logger.error("We could not connect to github.com, we will try using local splashes");
+			CrashDumping.DumpCrash(e);
+			loadSplashesOffline();
+		}
 		getRandSplash();
 	}
 
 	public static void getRandSplash() {
-		Logger.debug("Getting random splash for main menu");
 		r.splash = splashes.get(random.nextInt(splashes.size()));
 	}
 	
-	private void loadSplashes() {
-		
+	private void loadSplashesOnline() throws IOException {
 		URL url = null;
 		try {
 			url = new URL("https://raw.githubusercontent.com/hahn2014/Minecraft2D/master/Recources/splash.txt");
 		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
+			Logger.error("Invalid URL type. Will use local splashes");
+			CrashDumping.DumpCrash(e1);
 		}
-		
+
+		Logger.debug("Loading splashes from online github file");
         String line;
         BufferedReader in;
+		in = new BufferedReader(new InputStreamReader(url.openStream()));
+	    while ((line = in.readLine()) != null) {
+	    	if (line.endsWith("!")) {
+    	        splashes.add(line);
+	    	} else {
+	    		Logger.debug("Found this weird text sentence: " + line);
+	    	}
+	    }
+	    in.close();
+	}
+	
+	private void loadSplashesOffline() {
 		try {
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
-    	    while ((line = in.readLine()) != null) {
-    	    	if (line.endsWith("!")) {
-        	        splashes.add(line);
-    	    	} else {
-    	    		System.out.println("Found this weird text sentence: " + line);
-    	    	}
-    	    }
-    	    in.close();
+			Logger.debug("Loading splashes from offline local file");
+			String line = "";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(".\\splash.txt")));
+			while ((line = reader.readLine()) != null) {
+				if (line.endsWith("!")) {
+					splashes.add(line);
+				}
+		    }
+		    reader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			Logger.error("Could not load from file. Check dump file");
+			CrashDumping.DumpCrash(e);
 		}
 	}
 	

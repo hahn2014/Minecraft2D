@@ -10,14 +10,30 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import com.minecraft.client.IO.*;
-import com.minecraft.client.game.*;
-import com.minecraft.client.listeners.*;
+import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.InputPane;
+import com.minecraft.client.IO.Logger;
+import com.minecraft.client.IO.OptionPane;
+import com.minecraft.client.game.Player;
+import com.minecraft.client.game.SaveLoad;
+import com.minecraft.client.game.Sky;
+import com.minecraft.client.game.WorldRender;
+import com.minecraft.client.listeners.KeyInputListener;
+import com.minecraft.client.listeners.MouseInpListener;
+import com.minecraft.client.listeners.MouseMotListener;
+import com.minecraft.client.listeners.MouseWhlListener;
 import com.minecraft.client.math.FPS;
-import com.minecraft.client.menus.*;
-import com.minecraft.client.misc.*;
+import com.minecraft.client.menus.DeleteWorldMenu;
+import com.minecraft.client.menus.LoadWorldMenu;
+import com.minecraft.client.menus.MainMenu;
+import com.minecraft.client.menus.NewWorldMenu;
+import com.minecraft.client.menus.PauseMenu;
+import com.minecraft.client.menus.SettingsMenu;
+import com.minecraft.client.misc.References;
+import com.minecraft.client.misc.SettingsLoader;
 import com.minecraft.client.resources.NewComputer;
 import com.minecraft.client.resources.SoundEngine;
+import com.minecraft.client.resources.Splashes;
 import com.minecraft.client.resources.Tile;
 
 public class Minecraft extends Applet implements Runnable {
@@ -46,6 +62,7 @@ public class Minecraft extends Applet implements Runnable {
 	public static OptionPane 		op;
 	public static InputPane			ip;
 	public static Sky 				sky;
+	public static SettingsLoader	settingsloader;
 
 	public Minecraft() {
 		r = new References();
@@ -54,6 +71,7 @@ public class Minecraft extends Applet implements Runnable {
 		sky = new Sky();
 		soundengine = new SoundEngine();
 		splashes = new Splashes();
+		settingsloader = new SettingsLoader();
 		frame.dispose();
 		frame.setUndecorated(true);
 		frame.pack();
@@ -81,12 +99,12 @@ public class Minecraft extends Applet implements Runnable {
 		//start sound
 		//set frame to visible
 		frame.setVisible(true);
-		
-		//temporarily dissabling sound cause i like to jam to my jams while coding
-		
-		soundengine.startWithRandomSong();
-		
+
 		Logger.info("Finished Settings Things Up");
+		Logger.info("now reading settings");
+		settingsloader.loadSettings();
+		//temporarily dissabling sound cause i like to jam to my jams while coding
+		soundengine.startWithRandomSong();
 	}
 	
 	public void stop() {
@@ -233,6 +251,7 @@ public class Minecraft extends Applet implements Runnable {
 		game = new Minecraft();
 		frame.add(game);
 		nc = new NewComputer();
+		nc.checkForMissingFiles();
 		player = new Player(Tile.tileSize, Tile.tileSize * 2); //1 block wide, 2 high
 		FPS = new FPS();
 		FPS.alterFPSCap(60.0);

@@ -32,11 +32,23 @@ public class SettingsMenu {
 		widthtimes = (r.PIXEL.width / r.imgWidth) + 1;
 		heighttimes = (r.PIXEL.height / r.imgHeight) + 1;
 		
-		buttons[0] = "Go Windowed Mode";
-		buttons[1] = "Dissable Auto Save Feature";
-		buttons[2] = "Dissable Music";
-		buttons[3] = "Dissable Sound Effects";
-		buttons[4] = "Alter FPS Cap (" + (int)(r.FPScap) + ")";
+		if (r.fullscreen)
+			buttons[0] = "Go Windowed Mode";
+		else
+			buttons[0] = "Go Fullscreen Mode";
+		if (r.autoSave)
+			buttons[1] = "Dissable Auto Save Feature";
+		else
+			buttons[1] = "Enable Auto Save Feature";
+		if (r.playMusic)
+			buttons[2] = "Dissable Music";
+		else
+			buttons[2] = "Enable Music";
+		if (r.playSoundEF)
+			buttons[3] = "Dissable Sound Effects";
+		else
+			buttons[3] = "Enable Sound Effects";
+		buttons[4] = "Alter FPS Cap (" +  Math.ceil(r.FPScap) + ")";
 		buttons[5] = "Delete A World";
 		buttons[6] = "Back";
 		

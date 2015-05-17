@@ -8,6 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.JOptionPane;
 
@@ -19,14 +22,15 @@ public class NewComputer {
 	public static int songs = 5;
 	public static int effects = 1;
 	//set up the initial folders
-	public final static String SoundsDirectory 			= new String(appdata + "\\.MINECRAFT2D\\Sounds");
-	public final static String savesDirectory 			= new String(appdata + "\\.MINECRAFT2D\\saves");
-	public final static String dumpDirectory			= new String(appdata + "\\.MINECRAFT2D\\Dumps");
-	public final static String SoundEffectDirectory		= new String(SoundsDirectory + "\\Effecfts");
-	public final String gameDirectory 					= new String(appdata + "\\.MINECRAFT2D");
+	public final static String SoundsDirectory 			= new String(appdata 			+ "\\.MINECRAFT2D\\Sounds");
+	public final static String savesDirectory 			= new String(appdata 			+ "\\.MINECRAFT2D\\saves");
+	public final static String dumpDirectory			= new String(appdata 			+ "\\.MINECRAFT2D\\Dumps");
+	public final static String SoundEffectDirectory		= new String(SoundsDirectory 	+ "\\Effecfts");
+	public final static String settingsFile				= new String(appdata 			+ "\\.MINECRAFT2D\\settings.ini");
+	public final String gameDirectory 					= new String(appdata 			+ "\\.MINECRAFT2D");
 	private boolean shown = false;
 	
-	public NewComputer() {
+	public void checkForMissingFiles() {
 		//we need to check if the files exist
 		if (!checkIfDirExists(SoundsDirectory)) {
 			Logger.debug("Sound directory was not found... we need to download everything");
@@ -64,6 +68,17 @@ public class NewComputer {
 				downloadFile("Effecfts/effect" + i + ".wav");
 			} else {
 				//Logger.debug("we found the effect effect" + i + ".wav");
+			}
+		}
+		//check if settings file is missing
+		if (!new File(settingsFile).exists()) {
+			Logger.debug("Settings file is missing. We will recreate it");
+			try {
+				new File(settingsFile).createNewFile();
+				Path file = Paths.get(System.getProperty("user.home"),"AppData", "roaming", ".MINECRAFT2D", "settings.ini");
+				Files.setAttribute(file, "dos:hidden", true);
+			} catch (IOException e) {
+				CrashDumping.DumpCrash(e);
 			}
 		}
 	}

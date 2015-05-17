@@ -29,10 +29,11 @@ public class SoundEngine {
     }
     
     public void startWithRandomSong() {
-    	r.playMusic = true;
-    	random.setSeed(System.currentTimeMillis());
-    	Logger.info("choosing random song to play on start up");
-    	playSong("menu" + (random.nextInt(NewComputer.songs) + 1) + ".wav");
+    	if (r.playMusic == true) {
+	    	random.setSeed(System.currentTimeMillis());
+	    	Logger.info("choosing random song to play on start up");
+	    	playSong("menu" + (random.nextInt(NewComputer.songs) + 1) + ".wav");
+    	}
     }
     
     public void playSong(String file) {
@@ -94,5 +95,11 @@ public class SoundEngine {
     
     public Clip getEffectClip() {
     	return effectClip;
+    }
+    
+    public void stopClip() {
+    	if (getMusicClip() != null) {
+    		getMusicClip().stop();
+    	}
     }
 }

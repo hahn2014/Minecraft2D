@@ -20,7 +20,7 @@ import com.minecraft.client.menus.NewWorldMenu;
 import com.minecraft.client.menus.PauseMenu;
 import com.minecraft.client.menus.SettingsMenu;
 import com.minecraft.client.misc.References;
-import com.minecraft.client.misc.Splashes;
+import com.minecraft.client.resources.Splashes;
 import com.minecraft.client.resources.Tile;
 
 public class KeyInputListener implements KeyListener{
@@ -296,12 +296,15 @@ public class KeyInputListener implements KeyListener{
 									Minecraft.settings.buttons[2] = "Dissable Music";
 								}
 								r.playMusic = !r.playMusic;
-								if (r.playMusic && Minecraft.soundengine.getMusicClip() != null) {
+								if (r.playMusic == true && Minecraft.soundengine.getMusicClip() != null) {
 									Minecraft.soundengine.getMusicClip().start();
-								} else {
+								} else if (r.playMusic == false) {
 									if (Minecraft.soundengine.getMusicClip() != null) {
 										Minecraft.soundengine.getMusicClip().stop();
 									}
+								}
+								if (Minecraft.soundengine.getMusicClip() == null && r.playMusic == true) {
+									Minecraft.soundengine.startWithRandomSong();
 								}
 								break;
 							case 3:
@@ -322,13 +325,9 @@ public class KeyInputListener implements KeyListener{
 								break;
 							case 4:
 								try {
-									try {
-										Minecraft.ip = new InputPane("Alter FPS CAP", "Enter a number from 24-10000 OR -1 for no cap", "DONE", 200, 80, 100, 20, Tile.stone, 16, 16, 1.0f,
-												Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, Color.WHITE, true);
-										Minecraft.ip.updateVars(1);
-									} catch (Exception e) {
-										CrashDumping.DumpCrash(e);
-									}
+									Minecraft.ip = new InputPane("Alter FPS CAP", "Enter a number from 24-10000 OR -1 for no cap", "DONE", 200, 80, 100, 20, Tile.stone, 16, 16, 1.0f,
+											Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, Color.WHITE, true);
+									Minecraft.ip.updateVars(1);
 								} catch (Exception e) {
 									CrashDumping.DumpCrash(e);
 								}
@@ -352,6 +351,7 @@ public class KeyInputListener implements KeyListener{
 							case 6:
 								r.MENU = SettingsMenu.lastMenu;
 								SettingsMenu.curselect = 0;
+								Minecraft.settingsloader.saveSettings();
 								break;
 						}
 						break;

@@ -28,7 +28,7 @@ public class References {
 	
 	
 	public final String 			BUILD = "Pre-Alpha BUILD";
-	public final String				VERSION = "0.1.2.7";
+	public final String				VERSION = "0.1.2.8";
 	public final String				NAME = "Minecraft 2D";
 	public String					curWorld = "";
 	public String					splash = "";
