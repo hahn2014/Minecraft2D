@@ -37,10 +37,10 @@ public class SettingsLoader {
 	}
 	
 	public void saveSettings() {
-		ini.setValue("music", r.playMusic);
-		ini.setValue("soundef", r.playSoundEF);
-		ini.setValue("autosave", r.autoSave);
-		ini.setValue("fullscreen", r.fullscreen);
-		ini.setValue("fpscap", r.FPScap);
+		//ini.setValue("music", r.playMusic);
+		//ini.setValue("soundef", r.playSoundEF);
+		//ini.setValue("autosave", r.autoSave);
+		//ini.setValue("fullscreen", r.fullscreen);
+		//ini.setValue("fpscap", r.FPScap);
 	}
 }
