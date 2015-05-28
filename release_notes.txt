@@ -1,3 +1,11 @@
+BUILD 1.3.0
+-fully functioning ini loading and saving for settings
+-fixed missing background glitch!
+-using -d statement when running the jar on the command line will give you all development debug statements
+-using -development will allow the game to run as a developer which will remove unnecessary game features
+-removed my own failed attempt at ini file handling
+-now using ini4j as a jar source, will be included within the jar so the jar will now be a little bigger
+
 BUILD 1.2.9
 -finally fixed world generation and playing
 -completely reworked image usage
