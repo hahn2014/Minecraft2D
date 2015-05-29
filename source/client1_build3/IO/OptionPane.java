@@ -29,6 +29,7 @@ public class OptionPane {
 	private int boxWidth, boxHeight, minwidth = 200, minheight = 80,
 		imageWidth, imageHeight, minImageWidth = 8, minImageHeight = 8,
 		buttonWidth = 100, buttonHeight = 20;
+	private int[] img = {-1, -1};
 	private String TITLE, MESSAGE, BUTTON;
 	private Color boxColor, titleColor, messageColor, buttonColor;
 	private float opacity = 1.0f;
@@ -64,6 +65,7 @@ public class OptionPane {
 		image = null;
 		opacity = 1.0f;
 		this.render = false;
+		img[0] = -1; img[1] = -1;
 		x = (r.PIXEL.width / 2) - (boxWidth / 2);
 		y = (r.PIXEL.height / 2) - (boxHeight / 2);
 	}
@@ -110,6 +112,7 @@ public class OptionPane {
 		this.buttonColor = buttonColor;
 		this.image = null;
 		this.render = render;
+		img[0] = -1; img[1] = -1;
 		x = (r.PIXEL.width / 2) - (boxWidth / 2);
 		y = (r.PIXEL.height / 2) - (boxHeight / 2);
 	}
@@ -167,6 +170,68 @@ public class OptionPane {
 		this.messageColor = messageColor;
 		this.buttonColor = buttonColor;
 		this.image = image;
+		this.opacity = imageOpacity;
+		this.render = render;
+		img[0] = -1; img[1] = -1;
+		x = (r.PIXEL.width / 2) - (boxWidth / 2);
+		y = (r.PIXEL.height / 2) - (boxHeight / 2);
+		xtimes = (boxWidth / imageWidth) + 1;
+		ytimes = (boxHeight / imageHeight) + 1;
+	}
+	
+	/**
+	 * Side constructor, will take in a title, message and a button string, the width and height of the 
+	 * option pane, the background image to display, the opacity of the background image, title, message,
+	 * and button text color, and whether to draw it or not.
+	 * 
+	 * @param title The string title text.
+	 * @param message The string message box text.
+	 * @param button The string button text.
+	 * @param boxWidth The int width of the message box. Default is 200
+	 * @param boxHeight The int height of the message box. Default is 80
+	 * @param image The bufferedimage of the background. Defaykt is empty
+	 * @param imageWidth The int width the image will be rendered. (will render full box width, not stretched)
+	 * @param imageHeight The int height the image will be rendered. (will render the full box height, not stretched)
+	 * @param imageOpacity The float opacity the image will render at.
+	 * @param titleColor The color of the title text.
+	 * @param messageColor The color of the message text.
+	 * @param buttonColor The color of the button text.
+	 * @param render boolean on whether the option pane should be rendered of not.
+	 * 
+	 * @throws Exception
+	 * 
+	 * @since Pre-Alpha 1.29
+	 * 
+	 * @author Bryce Hahn
+	 */
+	public OptionPane(String title, String message, String button, int boxWidth, int boxHeight, int[] image, int imageWidth,
+			int imageHeight, float imageOpacity, Color titleColor, Color messageColor, Color buttonColor, boolean render) throws Exception {
+		m = new Methods();
+		r = Minecraft.getReferences();
+		if (boxWidth >= minwidth)
+			this.boxWidth = boxWidth;
+		else
+			this.boxWidth = minwidth;
+		if (boxHeight >= minheight)
+			this.boxHeight = boxHeight;
+		else 
+			this.boxHeight = minheight;
+		
+		if (imageWidth >= minImageWidth)
+			this.imageWidth = imageWidth;
+		else
+			this.imageWidth = minImageWidth;
+		if (imageHeight >= minImageHeight)
+			this.imageHeight = imageHeight;
+		else 
+			this.imageHeight = minImageHeight;
+		this.TITLE = title;
+		this.MESSAGE = message;
+		this.BUTTON = button;
+		this.titleColor = titleColor;
+		this.messageColor = messageColor;
+		this.buttonColor = buttonColor;
+		img = image;
 		this.opacity = imageOpacity;
 		this.render = render;
 		x = (r.PIXEL.width / 2) - (boxWidth / 2);
@@ -333,13 +398,20 @@ public class OptionPane {
 		if (render) {
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
 			//we need to render the popup dialog
-			if (image == null) {
+			if (image == null && (img[0] == -1 && img[1] == -1)) {
 				g2d.setColor(boxColor);
 				g2d.fillRect(x, y, boxWidth, boxHeight);
 			} else {
 				for (int a = 0; a < xtimes; a++) {
 					for (int b = 0; b < ytimes; b++) {
-						g2d.drawImage(image, (x - 4) + (imageWidth * a), (y - 6) + (imageHeight * b), imageWidth, imageHeight, null);
+						if (img[0] == -1 && img[1] == -1) {
+							g2d.drawImage(image, (x - 4) + (imageWidth * a), (y - 6) + (imageHeight * b), imageWidth, imageHeight, null);
+						} else {
+							g2d.drawImage(Tile.texture,(x - 4) + (imageWidth * a),(y - 6) + (imageHeight * b),
+									((x - 4) + (imageWidth * a)) + imageWidth, ((y - 6) + (imageHeight * b)) + imageHeight,
+									img[0] * Tile.tileSize, img[1] * Tile.tileSize, img[0] * Tile.tileSize + Tile.tileSize,
+									img[1] * Tile.tileSize + Tile.tileSize, null);
+						}
 					}
 				}
 			}

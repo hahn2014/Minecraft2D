@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.Logger;
+import com.minecraft.client.IO.OptionPane;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.Methods;
 import com.minecraft.client.misc.References;
@@ -150,8 +151,8 @@ public class NewWorldMenu {
 			Logger.info(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
 		} else {
 			try {
-//				Minecraft.op = new OptionPane("Woah There!", "You are trying to create a new world without a name! Please enter a valid name then try again.",
-//						"OK", 200, 80, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+				Minecraft.op = new OptionPane("Woah There!", "You are trying to create a new world without a name! Please enter a valid name then try again.",
+						"OK", 200, 80, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
 				Minecraft.op.updateVars(1);
 			} catch(Exception e) {
 				CrashDumping.DumpCrash(e);

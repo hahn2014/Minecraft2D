@@ -1,9 +1,11 @@
 package com.minecraft.client.misc;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.ini4j.Ini;
@@ -35,18 +37,20 @@ public class SettingsLoader {
 				mc.setFrameSize(r.fullscreen);
 				r.FPScap = Double.parseDouble(section.get("fpscap"));
 				mc.FPS.alterFPSCap(r.FPScap);
-				mc.settings.buttons[4] = "Alter FPS Cap (" + Math.ceil(r.FPScap) + ")";
+				r.lastPlayedWorld = section.get("lpw");
 				//stop any music that might be playing if music is disabled
 				if (!r.playMusic)
 					mc.soundengine.stopClip();
-	
+				updateSettingsButtons();
 				showLoadDebug();
 			} catch (Exception e) {
 				e.printStackTrace();
-				Logger.error("Failed to load settings...");
+				Logger.error("Failed to load settings... Will try loading with default settings");
+				loadWithDefault();
 			}
 		} else {
 			createIni();
+			loadSettings(NewComputer.settingsFile);
 		}
 	}
 	
@@ -59,6 +63,7 @@ public class SettingsLoader {
 				ini.put("menu", "autosave", 	r.autoSave);
 				ini.put("menu", "fullscreen", 	r.fullscreen);
 				ini.put("menu", "fpscap", 		r.FPScap);
+				ini.put("menu", "lpw", 			r.lastPlayedWorld);
 				ini.store();
 				showSaveDebug();
 			} catch (Exception e) {
@@ -78,6 +83,7 @@ public class SettingsLoader {
 		Logger.debug("Auto Save		[" + r.autoSave + "]");
 		Logger.debug("Full Screen		[" + r.fullscreen + "]");
 		Logger.debug("FPS Cap 		[" + r.FPScap + "]");
+		Logger.debug("last Played World     [" + r.lastPlayedWorld + "]");
 		Logger.debug("-----------------------");
 	}
 	
@@ -88,24 +94,65 @@ public class SettingsLoader {
 		Logger.debug("Auto Save		[" + r.autoSave + "]");
 		Logger.debug("Full Screen		[" + r.fullscreen + "]");
 		Logger.debug("FPS Cap 		[" + r.FPScap + "]");
+		Logger.debug("last Played World     [" + r.lastPlayedWorld + "]");
 		Logger.debug("-----------------------");
 	}
 	
 	public void createIni() {
-		PrintWriter writer;
+		BufferedWriter writer;
+		File file = new File(NewComputer.settingsFile);
 		try {
-			writer = new PrintWriter(NewComputer.settingsFile, "UTF-8");
-			writer.println("[menu]");
-			writer.println("sound=true");
-			writer.println("soundef=false");
-			writer.println("autosave=true");
-			writer.println("fullscreen=false");
-			writer.println("fpscap=59.97");
+			writer = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
+			writer.write("[menu]"); writer.newLine();
+			writer.write("sound=true"); writer.newLine();
+			writer.write("soundef=false"); writer.newLine();
+			writer.write("autosave=true"); writer.newLine();
+			writer.write("fullscreen=false"); writer.newLine();
+			writer.write("fpscap=59.97"); writer.newLine();
+			writer.write("lpw=null"); writer.newLine();
 			writer.close();
+			Logger.debug("Ini file has been created");
+			r.needIni = false;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * If all else fails, the program will resort to default
+	 * settings to avoid any conflicting crashes
+	 */
+	private void loadWithDefault() {
+		r.playMusic = true; r.playSoundEF = false;
+		r.autoSave = true; r.fullscreen = false;
+		r.FPScap = 59.97; r.lastPlayedWorld = null;
+		showLoadDebug();
+	}
+	
+	private void updateSettingsButtons() {
+		if (r.fullscreen)
+			Minecraft.settings.buttons[0] = "Go Windowed Mode";
+		else
+			Minecraft.settings.buttons[0] = "Go Fullscreen Mode";
+		if (r.autoSave)
+			Minecraft.settings.buttons[1] = "Dissable Auto Save Feature";
+		else
+			Minecraft.settings.buttons[1] = "Enable Auto Save Feature";
+		if (r.playMusic)
+			Minecraft.settings.buttons[2] = "Dissable Music";
+		else
+			Minecraft.settings.buttons[2] = "Enable Music";
+		if (r.playSoundEF)
+			Minecraft.settings.buttons[3] = "Dissable Sound Effects";
+		else
+			Minecraft.settings.buttons[3] = "Enable Sound Effects";
+		if (r.FPScap == 999999.9)
+			Minecraft.settings.buttons[4] = "Alter FPS Cap (INFINITE)";
+		else
+			Minecraft.settings.buttons[4] = "Alter FPS Cap (" + Math.ceil(r.FPScap) + ")";
 	}
 }

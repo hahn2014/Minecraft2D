@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.minecraft.client.IO.CrashDumping;
+import com.minecraft.client.IO.InputPane;
 import com.minecraft.client.IO.Logger;
 import com.minecraft.client.IO.OptionPane;
 import com.minecraft.client.game.SaveLoad;
@@ -226,8 +227,8 @@ public class KeyInputListener implements KeyListener{
 									MainMenu.curselect = 0;
 								} else {
 									try {
-//										Minecraft.op = new OptionPane("Woah There!", "You need to have played a world in order to resume from the last played world! Please create a world first.",
-//												"OK", 200, 80, Tile.texture, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+										Minecraft.op = new OptionPane("Woah There!", "You need to have played a world in order to resume from the last played world! Please create a world first.",
+												"OK", 200, 80, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
 										Minecraft.op.updateVars(1);
 									} catch(Exception e) {
 										CrashDumping.DumpCrash(e);
@@ -244,7 +245,7 @@ public class KeyInputListener implements KeyListener{
 								} else {
 									try {
 										Minecraft.op = new OptionPane("Woah There!", "You need to have at least one world created in order to load from a world. Please create a world first.",
-												"OK", 200, 80, Tile.texture, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+												"OK", 200, 80, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
 										Minecraft.op.updateVars(1);
 									} catch (Exception e) {
 										CrashDumping.DumpCrash(e);
@@ -330,8 +331,8 @@ public class KeyInputListener implements KeyListener{
 								break;
 							case 4:
 								try {
-//									Minecraft.ip = new InputPane("Alter FPS CAP", "Enter a number from 24-10000 OR -1 for no cap", "DONE", 200, 80, 100, 20, Tile.texture, 16, 16, 1.0f,
-//											Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, Color.WHITE, true);
+									Minecraft.ip = new InputPane("Alter FPS CAP", "Enter a number from 24-10000 OR -1 for no cap", "DONE", 200, 80, 100, 20, Tile.stone, 16, 16, 1.0f,
+											Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.BLUE, Color.WHITE, true);
 									Minecraft.ip.updateVars(1);
 								} catch (Exception e) {
 									CrashDumping.DumpCrash(e);
@@ -346,7 +347,7 @@ public class KeyInputListener implements KeyListener{
 								} else {
 									try {
 										Minecraft.op = new OptionPane("Woah There!", "In order to open the delete menu, you must have at least one world created to delete. Please create a new world first.",
-												"OK", 200, 80, Tile.texture, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+												"OK", 200, 80, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
 										Minecraft.op.updateVars(1);
 									} catch (Exception e) {
 										CrashDumping.DumpCrash(e);
@@ -421,9 +422,13 @@ public class KeyInputListener implements KeyListener{
 						case 2: //main menu & save
 							//save code
 							SaveLoad.Save(r.curWorld);
+							r.lastPlayedWorld = r.curWorld;
+							Minecraft.settingsloader.saveSettings(NewComputer.settingsFile);
 							r.MENU = 0;
 							break;
 						case 3: //quit
+							r.lastPlayedWorld = r.curWorld;
+							Minecraft.settingsloader.saveSettings(NewComputer.settingsFile);
 							r.isRunning = false;
 							System.exit(0);
 							break;
@@ -448,7 +453,7 @@ public class KeyInputListener implements KeyListener{
 						} else {
 							try {
 								Minecraft.op = new OptionPane("Woah There!", "You entered " + ans + " and that is not a valid number to be entered\nPlease try a different number.",
-										"OK", 200, 80, Tile.texture, 16, 16, 1.0f,Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+										"OK", 200, 80, Tile.stone, 16, 16, 1.0f,Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
 								Minecraft.op.updateVars(1);
 							} catch (Exception e) {
 								CrashDumping.DumpCrash(e);

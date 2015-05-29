@@ -255,8 +255,10 @@ public class Minecraft extends Applet implements Runnable {
 				Thread.sleep(5);
 			} catch(Exception ex) {
 				ex.printStackTrace();
-				op = new OptionPane("Woah There!", ex + "\nSorry! and unexpected error occured. The program will now exit",
-						"OK", 200, 60, new Color(100, 80, 100), 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+				try {
+					op = new OptionPane("Woah There!", ex + "\nSorry! and unexpected error occured. The program will now exit",
+							"OK", 200, 60, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
+				} catch (Exception e) {}
 				op.updateVars(2);
 				CrashDumping.DumpCrash(ex);
 				System.exit(0);

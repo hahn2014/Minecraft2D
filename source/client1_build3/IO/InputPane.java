@@ -28,6 +28,7 @@ public class InputPane {
 	private int boxWidth, boxHeight, minwidth = 200, minheight = 80, imageWidth,
 		imageHeight, minImageWidth = 8, minImageHeight = 8, buttonWidth = 100,
 		buttonHeight = 20, textFieldWidth = 100, textFieldHeight = 20;
+	private int[] img = {-1, -1};
 	private String TITLE = "", MESSAGE = "", BUTTON = "", FIELD = "";
 	private Color boxColor, titleColor, messageColor, fieldColor, buttonColor;
 	private float opacity = 1.0f;
@@ -62,6 +63,7 @@ public class InputPane {
 		image = null;
 		opacity = 1.0f;
 		render = false;
+		img[0] = -1; img[1] = -1;
 		x = (r.PIXEL.width / 2) - (boxWidth / 2);
 		y = (r.PIXEL.height / 2) - (boxHeight / 2);
 	}
@@ -111,6 +113,7 @@ public class InputPane {
 		this.fieldColor = fieldColor;
 		this.buttonColor = buttonColor;
 		this.image = null;
+		img[0] = -1; img[1] = -1;
 		this.render = render;
 		x = (r.PIXEL.width / 2) - (boxWidth / 2);
 		y = (r.PIXEL.height / 2) - (boxHeight / 2);
@@ -172,6 +175,69 @@ public class InputPane {
 		this.fieldColor = fieldColor;
 		this.buttonColor = buttonColor;
 		this.image = image;
+		this.opacity = imageOpacity;
+		this.render = render;
+		img[0] = -1; img[1] = -1;
+		x = (r.PIXEL.width / 2) - (boxWidth / 2);
+		y = (r.PIXEL.height / 2) - (boxHeight / 2);
+		xtimes = (boxWidth / imageWidth) + 1;
+		ytimes = (boxHeight / imageHeight) + 1;
+	}
+	
+	/**
+	 * 
+	 * @param title
+	 * @param message
+	 * @param button
+	 * @param boxWidth
+	 * @param boxHeight
+	 * @param fieldWidth
+	 * @param fieldHeight
+	 * @param image
+	 * @param imageWidth
+	 * @param imageHeight
+	 * @param imageOpacity
+	 * @param titleColor
+	 * @param messageColor
+	 * @param fieldColor
+	 * @param buttonColor
+	 * @param render
+	 * @throws Exception
+	 * 
+	 * @since 1.31
+	 * @author Bryce
+	 */
+	public InputPane(String title, String message, String button, int boxWidth, int boxHeight, int fieldWidth, int fieldHeight, int[] image, int imageWidth,
+			int imageHeight, float imageOpacity, Color titleColor, Color messageColor, Color fieldColor, Color buttonColor, boolean render) throws Exception {
+		m = new Methods();
+		r = Minecraft.getReferences();
+		if (boxWidth >= minwidth)
+			this.boxWidth = boxWidth;
+		else
+			this.boxWidth = minwidth;
+		if (boxHeight >= minheight)
+			this.boxHeight = boxHeight;
+		else 
+			this.boxHeight = minheight;
+		
+		if (imageWidth >= minImageWidth)
+			this.imageWidth = imageWidth;
+		else
+			this.imageWidth = minImageWidth;
+		if (imageHeight >= minImageHeight)
+			this.imageHeight = imageHeight;
+		else 
+			this.imageHeight = minImageHeight;
+		this.textFieldHeight = fieldHeight;
+		this.textFieldWidth = fieldWidth;
+		this.TITLE = title;
+		this.MESSAGE = message;
+		this.BUTTON = button;
+		this.titleColor = titleColor;
+		this.messageColor = messageColor;
+		this.fieldColor = fieldColor;
+		this.buttonColor = buttonColor;
+		this.img = image;
 		this.opacity = imageOpacity;
 		this.render = render;
 		x = (r.PIXEL.width / 2) - (boxWidth / 2);
@@ -330,13 +396,20 @@ public class InputPane {
 		if (render) {
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
 			//we need to render the popup dialog
-			if (image == null) {
+			if (image == null && (img[0] == -1 && img[1] == -1)) {
 				g2d.setColor(boxColor);
 				g2d.fillRect(x, y, boxWidth, boxHeight);
 			} else {
 				for (int a = 0; a < xtimes; a++) {
 					for (int b = 0; b < ytimes; b++) {
-						g2d.drawImage(image, (x - 4) + (imageWidth * a), (y - 6) + (imageHeight * b), imageWidth, imageHeight, null);
+						if (img[0] == -1 && img[1] == -1) {
+							g2d.drawImage(image, (x - 4) + (imageWidth * a), (y - 6) + (imageHeight * b), imageWidth, imageHeight, null);
+						} else { //draw with certain position on the image
+							g2d.drawImage(Tile.texture,(x - 4) + (imageWidth * a),(y - 6) + (imageHeight * b),
+									((x - 4) + (imageWidth * a)) + imageWidth, ((y - 6) + (imageHeight * b)) + imageHeight,
+									img[0] * Tile.tileSize, img[1] * Tile.tileSize, img[0] * Tile.tileSize + Tile.tileSize,
+									img[1] * Tile.tileSize + Tile.tileSize, null);
+						}
 					}
 				}
 			}

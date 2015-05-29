@@ -50,8 +50,6 @@ public class NewComputer {
 				}
 				Logger.debug("could not find song menu" + i + ".wav");
 				downloadFile("menu" + i + ".wav");
-			} else {
-				//Logger.debug("we found the song menu" + i + ".wav");
 			}
 		}
 		//download any missing effects
@@ -63,8 +61,6 @@ public class NewComputer {
 				}
 				Logger.debug("could not find sound effect effect" + i + ".wav");
 				downloadFile("Effecfts/effect" + i + ".wav");
-			} else {
-				//Logger.debug("we found the effect effect" + i + ".wav");
 			}
 		}
 		//check if settings file is missing

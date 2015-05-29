@@ -1,4 +1,12 @@
+BUILD 1.3.1
+-fixed ini saving where it would save as blank ini file
+-fixed ini loading where if the file is improper it will recreate it as default and then reload it
+-fixed settings buttons saying wrong text (ex: sound is off would say dissable sound instead of enable sound)
+-fixed input and option panes to show once again the images that are set for them originally, was temporarily removed due to image changing
+
 BUILD 1.3.0
+-as of 1.3, all sources will be saved to repo
+-as of 1.3, all jars will be saved to repo
 -fully functioning ini loading and saving for settings
 -fixed missing background glitch!
 -using -d statement when running the jar on the command line will give you all development debug statements

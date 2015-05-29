@@ -1,5 +1,6 @@
 package com.minecraft.client.IO;
 
+import java.awt.Color;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.DateFormat;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.resources.NewComputer;
+import com.minecraft.client.resources.Tile;
 
 public class CrashDumping {
 	public static void DumpCrash(Exception exception) {
@@ -24,8 +26,8 @@ public class CrashDumping {
 			writer.close();
 			
 			try {
-//				Minecraft.op = new OptionPane("Woah There!", "Sorry! and unexpected error occured. " + exception + " A log file has been created as " + dateFormat.format(date) + ".log",
-//						"OK", 200, 60, Tile.stone, 16, 16, 1.0f, Color.BLACK, Color.BLACK, Color.WHITE, true);
+				Minecraft.op = new OptionPane("Woah There!", "Sorry! and unexpected error occured. " + exception + " A log file has been created as " + dateFormat.format(date) + ".log",
+						"OK", 200, 60, Tile.stone, 16, 16, 1.0f, Color.BLACK, Color.BLACK, Color.WHITE, true);
 				Minecraft.op.updateVars(1);
 			} catch (Exception e) {
 				CrashDumping.DumpCrash(e);
