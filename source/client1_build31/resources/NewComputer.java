@@ -22,7 +22,7 @@ public class NewComputer {
 	public final static String SoundsDirectory 			= new String(appdata 			+ "\\.MINECRAFT2D\\Sounds");
 	public final static String savesDirectory 			= new String(appdata 			+ "\\.MINECRAFT2D\\saves");
 	public final static String dumpDirectory			= new String(appdata 			+ "\\.MINECRAFT2D\\Dumps");
-	public final static String SoundEffectDirectory		= new String(SoundsDirectory 	+ "\\Effecfts");
+	public final static String SoundEffectDirectory		= new String(SoundsDirectory 	+ "\\Effects");
 	public final static String settingsFile				= new String(appdata 			+ "\\.MINECRAFT2D\\settings.ini");
 	public final String gameDirectory 					= new String(appdata 			+ "\\.MINECRAFT2D");
 	private boolean shown = false;

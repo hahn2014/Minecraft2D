@@ -163,6 +163,7 @@ public class LoadWorldMenu {
 						}
 					}
 					build = SaveLoad.getFullBuildName(words.substring(0, versionstart));
+					build += " " + words.substring(versionstart, words.length());
 				}
 			}
 			br.close();
