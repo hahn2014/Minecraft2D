@@ -190,4 +190,8 @@ public class SaveLoad {
 			return "unknown";
 		}
 	}
+	
+	public static boolean checkIfExists(String worldname) {
+		return new File(NewComputer.savesDirectory + worldname + ".dat").exists();
+	}
 }

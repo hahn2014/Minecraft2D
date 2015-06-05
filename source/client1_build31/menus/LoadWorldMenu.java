@@ -219,14 +219,14 @@ public class LoadWorldMenu {
 						g2d.setColor(Color.LIGHT_GRAY);
 						g2d.drawString(worlds.get(i + 1), x - 59, y + ySpace);
 						g2d.drawImage(img[i + 1], x + 180, y + ySpace - 10, 40, 40, null);
-						g2d.drawString(builds[i], x - 59, y + ySpace + 32);
+						g2d.drawString(builds[i + 1], x - 59, y + ySpace + 32);
 					}
 					if (worlds.size() >= 3) {
 						g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 						g2d.setColor(Color.LIGHT_GRAY);
 						g2d.drawString(worlds.get(i + 2), x - 59, y + (ySpace * 2));
 						g2d.drawImage(img[i + 2], x + 180, y + (ySpace * 2) - 10, 40, 40, null);
-						g2d.drawString(builds[i], x - 59, y + (ySpace * 2) + 30);
+						g2d.drawString(builds[i + 2], x - 59, y + (ySpace * 2) + 30);
 					}
 				} else if (worldSelected[i] == 2) {
 
@@ -234,7 +234,7 @@ public class LoadWorldMenu {
 					g2d.setColor(Color.LIGHT_GRAY);
 					g2d.drawString(worlds.get(i - 1), x - 59, y);
 					g2d.drawImage(img[i - 1], x + 180, y - 10, 40, 40, null);
-					g2d.drawString(builds[i], x - 59, y + 32);
+					g2d.drawString(builds[i - 1], x - 59, y + 32);
 
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 					g2d.setColor(Color.WHITE);
@@ -246,14 +246,14 @@ public class LoadWorldMenu {
 					g2d.setColor(Color.LIGHT_GRAY);
 					g2d.drawString(worlds.get(i + 1), x - 59, y + (ySpace * 2));
 					g2d.drawImage(img[i + 1], x + 180, y + (ySpace * 2) - 10, 40, 40, null);
-					g2d.drawString(builds[i], x - 59, y + (ySpace * 2) + 30);
+					g2d.drawString(builds[i + 1], x - 59, y + (ySpace * 2) + 30);
 				} else if (worldSelected[i] == 3) {
 					if (i - 2 >= 0) {
 						g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 						g2d.setColor(Color.LIGHT_GRAY);
 						g2d.drawString(worlds.get(i - 2), x - 59, y);
 						g2d.drawImage(img[i - 2], x + 180, y - 10, 40, 40, null);
-						g2d.drawString(builds[i], x - 59, y + 32);
+						g2d.drawString(builds[i - 2], x - 59, y + 32);
 					}
 					if (i - 1 >= 0) {
 						g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
@@ -261,11 +261,11 @@ public class LoadWorldMenu {
 						if (worlds.size() >= 3) {
 							g2d.drawString(worlds.get(i - 1), x - 59, y + ySpace);
 							g2d.drawImage(img[i - 1], x + 180, y + ySpace - 10, 40, 40, null);
-							g2d.drawString(builds[i], x - 59, y + ySpace + 32);
+							g2d.drawString(builds[i - 1], x - 59, y + ySpace + 32);
 						} else {
 							g2d.drawString(worlds.get(i - 1), x - 59, y);
 							g2d.drawImage(img[i - 1], x + 180, y - 10, 40, 40, null);
-							g2d.drawString(builds[i], x - 59, y + 32);
+							g2d.drawString(builds[i - 1], x - 59, y + 32);
 						}
 					}
 					g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
@@ -290,17 +290,17 @@ public class LoadWorldMenu {
 				
 				g2d.drawString(worlds.get(0),     x - 59, y);
 				g2d.drawImage(img[0], x + 180, y - 10, 40, 40, null);
-				g2d.drawString(builds[i], x - 59, y + 32);
+				g2d.drawString(builds[0], x - 59, y + 32);
 				
 				if (worlds.size() >= 2) {
 					g2d.drawString(worlds.get(1), x - 59, y + ySpace);
 					g2d.drawImage(img[1], x + 180, y + ySpace - 10, 40, 40, null);
-					g2d.drawString(builds[i], x - 59, y + ySpace + 32);
+					g2d.drawString(builds[1], x - 59, y + ySpace + 32);
 				}
 				if (worlds.size() >= 3) {
 					g2d.drawString(worlds.get(2), x - 59, y + (ySpace * 2));
 					g2d.drawImage(img[2], x + 180, y + (ySpace * 2) - 10, 40, 40, null);
-					g2d.drawString(builds[i], x - 59, y + (ySpace * 2) + 30);
+					g2d.drawString(builds[2], x - 59, y + (ySpace * 2) + 30);
 				}
 			}
 		}

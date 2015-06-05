@@ -43,6 +43,6 @@ public class FPS {
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.setFont(font);
-		g.drawString("fps: " + finalFrames, 2, 21);
+		g.drawString("fps: " + finalFrames, 2, 18);
 	}
 }

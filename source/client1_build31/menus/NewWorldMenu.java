@@ -2,13 +2,15 @@ package com.minecraft.client.menus;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.Logger;
-import com.minecraft.client.IO.OptionPane;
+import com.minecraft.client.IO.YesNoPane;
 import com.minecraft.client.main.Minecraft;
 import com.minecraft.client.math.Methods;
 import com.minecraft.client.misc.References;
+import com.minecraft.client.misc.Tribool.VALUE;
 import com.minecraft.client.resources.Tile;
 
 public class NewWorldMenu {
@@ -24,7 +26,7 @@ public class NewWorldMenu {
 	private Color constant = new Color(255, 255, 255);
 	private Color cursor = new Color(255, 255, 255);
 	
-	private int R1 = 255, G1 = 255, B1 = 255;
+	private int R1 = 255, G1 = 255, B1 = 255, randWorldInt;
 	
 	public static String finalName = "";
 	private String button1 = "Create New World";
@@ -32,8 +34,10 @@ public class NewWorldMenu {
 	
 	private static References r;
 	private Methods m;
+	private Random rand = new Random();
 	
 	public NewWorldMenu() {
+		rand.setSeed(System.currentTimeMillis());
 		r = Minecraft.r;
 		m = new Methods();
 		
@@ -41,6 +45,10 @@ public class NewWorldMenu {
 
 		widthtimes = (r.PIXEL.width / Tile.tileSize) + 1;
 		heighttimes = (r.PIXEL.height / Tile.tileSize) + 1;
+	}
+	
+	public void newWorldInt() {
+		randWorldInt = rand.nextInt(999);
 	}
 	
 	public void tick() {
@@ -117,7 +125,10 @@ public class NewWorldMenu {
 		g.setColor(cursor);
 		g.drawString("|", x + (m.getStringWidth(finalName, r.font1) + 4), y + 13);
 		g.setColor(constant);
-		g.drawString("Creating in: " + finalName + ".dat", x, y + 30);
+		if (finalName != "")
+			g.drawString("Creating in: " + finalName + ".dat", x, y + 30);
+		else
+			g.drawString("Creating in: WORLD" + randWorldInt + ".dat", x, y + 30);
 		g.drawString(finalName.length() + "/" + r.textFieldMaxLength + " letters", x, y + 45);
 		//create new world lrgButton
 		g.setColor(b1);
@@ -132,7 +143,8 @@ public class NewWorldMenu {
 	
 	@SuppressWarnings("static-access")
 	public void createWorld() {
-		if (finalName.length() >= 1) {
+		if (!Minecraft.sl.checkIfExists(finalName)) {
+			//not a old world
 			r.isGenerating = true;
 			r.hasStarted = true;
 			r.MENU = 6;
@@ -144,18 +156,51 @@ public class NewWorldMenu {
 			}
 			Minecraft.level.generateLevel();
 			r.played++;
-			Minecraft.sl.Save(finalName);
+			if (finalName != "")
+				Minecraft.sl.Save(finalName);
+			else
+				finalName = "WORLD" + randWorldInt;
+				Minecraft.sl.Save(finalName);
 			r.loaded = false;
 			Minecraft.frame.setTitle(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
 			r.curWorld = finalName;
 			Logger.info(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
 		} else {
+			//there is a world with this name, ask if we should replace
 			try {
-				Minecraft.op = new OptionPane("Woah There!", "You are trying to create a new world without a name! Please enter a valid name then try again.",
-						"OK", 200, 80, Tile.stone, 16, 16, 1.0f, Color.LIGHT_GRAY, Color.LIGHT_GRAY, Color.WHITE, true);
-				Minecraft.op.updateVars(1);
-			} catch(Exception e) {
-				CrashDumping.DumpCrash(e);
+				Minecraft.ynp = new YesNoPane("Woah There!", "The world with this name has already been created. Do you wish to replace said world?", 200, 100, Tile.stone, r.imgWidth,
+						r.imgHeight, 1.0f, Color.WHITE, Color.WHITE, Color.BLUE, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Minecraft.ynp.setRender(true);
+			while (Minecraft.ynp.ans.toValue() == VALUE.n) {}
+			if (Minecraft.ynp.ans.toBoolean()) {
+				//continue and replace the world
+				r.isGenerating = true;
+				r.hasStarted = true;
+				r.MENU = 6;
+				curselect = 1;
+				for (int a = 0; a < Minecraft.level.block.length; a++) {
+					for (int b = 0; b < Minecraft.level.block[0].length; b++) {
+						Minecraft.level.block[a][b].id = Tile.blank;
+					}
+				}
+				Minecraft.level.generateLevel();
+				r.played++;
+				if (finalName != "")
+					Minecraft.sl.Save(finalName);
+				else
+					finalName = "WORLD" + randWorldInt;
+					Minecraft.sl.Save(finalName);
+				r.loaded = false;
+				Minecraft.frame.setTitle(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
+				r.curWorld = finalName;
+				Logger.info(r.NAME + " " + r.BUILD + " " + r.VERSION + " Playing on " + finalName + ".dat");
+				finalName = "";
+			} else {
+				//cancle
+				Minecraft.newWorld.finalName = "";
 			}
 		}
 	}

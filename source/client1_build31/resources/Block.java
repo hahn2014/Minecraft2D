@@ -23,7 +23,7 @@ public class Block extends Rectangle{
 	@SuppressWarnings("static-access")
 	public void render(Graphics g) {
 		if (id != Tile.blank) {
-			if (!Minecraft.getMinecraft().r.development) {
+			if (Minecraft.getMinecraft().r.development) {
 				g.setColor(Color.RED);
 				g.fillRect(x - (int)r.sx, y - (int)r.sy, x + width, y + height);
 				g.setColor(Color.BLUE);

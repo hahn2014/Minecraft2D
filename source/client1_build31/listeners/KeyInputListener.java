@@ -177,7 +177,8 @@ public class KeyInputListener implements KeyListener{
 				}
 				break;
 			case KeyEvent.VK_RIGHT:
-				switch (r.MENU) {
+				if (!Minecraft.ynp.getRender()) {
+					switch (r.MENU) {
 					case 4: //load menu
 						if (LoadWorldMenu.curselect != -1 && LoadWorldMenu.curselect != -2) {
 							LoadWorldMenu.curselect = -1;
@@ -192,33 +193,52 @@ public class KeyInputListener implements KeyListener{
 						DeleteWorldMenu.curselect = -1;
 						DeleteWorldMenu.scrollbar = 0;
 						break;
+					}
+				} else {
+					if (Minecraft.ynp.button == 1)
+						Minecraft.ynp.button = 0;
+					else if (Minecraft.ynp.button == 0)
+						Minecraft.ynp.button = 1;
+					else
+						Minecraft.ynp.button = 0;
 				}
+				
 				break;
 			case KeyEvent.VK_LEFT:
-				switch (r.MENU) {
-					case 4: //load menu
-						if (LoadWorldMenu.curselect != -1 && LoadWorldMenu.curselect != -2) {
-							LoadWorldMenu.curselect = -1;
-							LoadWorldMenu.scrollbar = 0;
-						} else if (LoadWorldMenu.curselect == -1) {
-							LoadWorldMenu.curselect = -2;
-						} else if (LoadWorldMenu.curselect == -2) {
-							LoadWorldMenu.curselect = -1;
-						}
-						break;
-					case 3: //delete menu
-						DeleteWorldMenu.curselect = -1;
-						DeleteWorldMenu.scrollbar = 0;
-						break;
+				if (!Minecraft.ynp.getRender()) {
+					switch (r.MENU) {
+						case 4: //load menu
+							if (LoadWorldMenu.curselect != -1 && LoadWorldMenu.curselect != -2) {
+								LoadWorldMenu.curselect = -1;
+								LoadWorldMenu.scrollbar = 0;
+							} else if (LoadWorldMenu.curselect == -1) {
+								LoadWorldMenu.curselect = -2;
+							} else if (LoadWorldMenu.curselect == -2) {
+								LoadWorldMenu.curselect = -1;
+							}
+							break;
+						case 3: //delete menu
+							DeleteWorldMenu.curselect = -1;
+							DeleteWorldMenu.scrollbar = 0;
+							break;
+					}
+				} else {
+					if (Minecraft.ynp.button == 1)
+						Minecraft.ynp.button = 0;
+					else if (Minecraft.ynp.button == 0)
+						Minecraft.ynp.button = 1;
+					else
+						Minecraft.ynp.button = 0;
 				}
 				break;
 			case KeyEvent.VK_ENTER:
-				if (!Minecraft.op.getRender() && !Minecraft.ip.getRender()) {
+				if (!Minecraft.op.getRender() && !Minecraft.ip.getRender() && !Minecraft.ynp.getRender()) {
 					switch (r.MENU) {
 					case 0: //main menu
 						switch (MainMenu.curselect) {
 							case 0: //new world
 								r.MENU = 1;
+								Minecraft.newWorld.newWorldInt();
 								MainMenu.curselect = 0;
 								break;
 							case 1: //resume last world
@@ -436,9 +456,9 @@ public class KeyInputListener implements KeyListener{
 						}
 						break;
 					}
-				} else if (Minecraft.op.getRender() && !Minecraft.ip.getRender()) {
+				} else if (Minecraft.op.getRender() && !Minecraft.ip.getRender() && !Minecraft.ynp.getRender()) {
 					Minecraft.op.setRender(false);
-				} else if (!Minecraft.op.getRender() && Minecraft.ip.getRender()) {
+				} else if (!Minecraft.op.getRender() && Minecraft.ip.getRender() && !Minecraft.ynp.getRender()) {
 					Minecraft.ip.setRender(false);
 					if (Minecraft.ip.getField() != null && Minecraft.ip.getField() != "") {
 						ans = Double.parseDouble(Minecraft.ip.getField());
@@ -461,8 +481,13 @@ public class KeyInputListener implements KeyListener{
 							}
 						}
 					}
+				} else if (!Minecraft.op.getRender()  && !Minecraft.ip.getRender() && Minecraft.ynp.getRender()) {
+					Minecraft.ynp.setAnswer((Minecraft.ynp.button < 1) ? "true" : "false");
+					Minecraft.ynp.setRender(false);
 				}
-				Minecraft.soundengine.playSoundEffect("effect1.wav");
+				if (r.MENU != 6) {
+					Minecraft.soundengine.playSoundEffect("effect1.wav");
+				}
 				break;
 			case KeyEvent.VK_BACK_SPACE:
 				if (r.MENU == 1 && r.isTyping) { //new world menu

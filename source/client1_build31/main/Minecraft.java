@@ -14,6 +14,7 @@ import com.minecraft.client.IO.CrashDumping;
 import com.minecraft.client.IO.InputPane;
 import com.minecraft.client.IO.Logger;
 import com.minecraft.client.IO.OptionPane;
+import com.minecraft.client.IO.YesNoPane;
 import com.minecraft.client.game.Level;
 import com.minecraft.client.game.Player;
 import com.minecraft.client.game.SaveLoad;
@@ -63,6 +64,7 @@ public class Minecraft extends Applet implements Runnable {
 	public static SaveLoad			sl;
 	public static OptionPane 		op;
 	public static InputPane			ip;
+	public static YesNoPane			ynp;
 	public static Sky 				sky;
 	public static SettingsLoader	settingsloader;
 
@@ -129,6 +131,7 @@ public class Minecraft extends Applet implements Runnable {
 		sl = new SaveLoad();
 		op = new OptionPane();
 		ip = new InputPane();
+		ynp = new YesNoPane();
 		sky = new Sky();
 		soundengine = new SoundEngine();
 		splashes = new Splashes();
@@ -238,10 +241,13 @@ public class Minecraft extends Applet implements Runnable {
 				g.drawString(r.BUILD + " " + r.VERSION, 311, 8);
 			}
 			FPS.render(g);
+			//get the panes
 			if (op.getRender())
 				op.render(g);
 			if (ip.getRender())
 				ip.render(g);
+			if (ynp.getRender())
+				ynp.render(g);
 			g = getGraphics();
 			g.drawImage(screen, 0, 0, r.SIZE.width, r.SIZE.height, 0, 0, r.PIXEL.width, r.PIXEL.height, null);
 			g.dispose();
