@@ -15,10 +15,15 @@ BUILD 1.3.1
 -Load world shows each worlds compatible version, will only work with that version (conversion to newer version will be implemented soon)
 
 -Fixed some improperly aligned rendering objects in menus
+
 -Fixed silly glitch bug in code where playing as developer showed images and playing as client player showed red and blue squares.
+
 -Added new popup box called a YesNo box. Allows for asking y/n questions such as if you wish to overwrite a world...
+
 -New World menu now checks if world already exists, if so it will ask if you wish to overwrite the world and change the name
+
 -Fixed minor load world gui bugs where the world versions were not correcly being rendered.
+
 -multiple other bugs and insects removed.
 
 
